@@ -33,7 +33,7 @@
     },
     methods: {
       async signup () {
-        await this.$axios.$post("/api/users/register", {
+        await this.$axios.$post("/users/register", {
           username: this.username,
           password: this.password
         })

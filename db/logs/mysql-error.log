@@ -606,3 +606,135 @@ mbind: Operation not permitted
 2022-11-06T11:40:05.040948+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
 2022-11-06T12:00:19.880866+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
 2022-11-06T12:00:21.323921+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-06T12:06:41.936396+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-06T12:06:41.959287+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-06T12:06:42.364920+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-06T12:06:42.614405+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-06T12:06:43.115975+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-06T12:06:43.123790+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-06T12:06:43.136500+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-06T12:06:43.208566+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-06T12:11:25.870055+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-06T12:11:27.079579+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T08:00:04.932813+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T08:00:04.967103+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T08:00:05.676129+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T08:00:06.224388+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T08:00:06.480190+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T08:00:06.483736+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T08:00:06.499940+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T08:00:06.588309+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T08:14:03.709005+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T08:14:04.341848+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T08:14:10.461755+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T08:14:10.476130+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T08:14:10.823070+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T08:14:10.965456+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T08:14:11.225117+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T08:14:11.227742+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T08:14:11.243753+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T08:14:11.463727+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T08:23:31.443374+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T08:23:32.362004+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T08:23:39.205160+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T08:23:39.237113+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T08:23:39.594283+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T08:23:39.786915+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T08:23:40.022632+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T08:23:40.040176+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T08:23:40.050430+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T08:23:40.454483+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T08:26:57.170948+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T08:26:58.468037+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T08:30:52.268823+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T08:30:52.290509+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T08:30:52.600426+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T08:30:52.831819+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T08:30:53.122132+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T08:30:53.125082+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T08:30:53.153553+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T08:30:53.372603+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T08:49:38.579268+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T08:49:39.706679+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T08:50:13.673039+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T08:50:13.702652+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T08:50:14.081548+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T08:50:14.235695+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T08:50:14.503784+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T08:50:14.509825+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T08:50:14.526069+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T08:50:14.783325+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T09:00:49.891809+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T09:00:50.670408+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-07T10:01:56.652845+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-07T10:01:56.687201+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-07T10:01:57.368887+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-07T10:01:57.713792+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-07T10:01:57.883484+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-07T10:01:57.885531+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-07T10:01:57.903562+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-07T10:01:58.035350+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-07T10:28:05.938313+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-07T10:28:07.961767+09:00 0 [Warning] [MY-010909] [Server] /usr/sbin/mysqld: Forcing close of thread 8  user: 'root'.
+2022-11-07T10:28:09.034243+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T07:34:01.568178+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T07:34:01.600060+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T07:34:02.256976+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T07:34:02.690779+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T07:34:02.901365+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T07:34:02.902594+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T07:34:02.909847+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T07:34:03.036824+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T07:37:11.133947+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T07:37:12.004709+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T07:37:19.168588+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T07:37:19.192519+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T07:37:20.070872+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T07:37:20.360888+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T07:37:20.618083+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T07:37:20.621631+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T07:37:20.636396+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T07:37:20.781152+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T08:17:23.235098+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T08:17:25.095102+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T08:17:31.160496+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T08:17:31.189472+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T08:17:32.583491+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T08:17:33.300925+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T08:17:33.678316+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T08:17:33.680155+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T08:17:33.697254+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T08:17:33.821007+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T08:46:06.001683+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T08:46:08.011571+09:00 0 [Warning] [MY-010909] [Server] /usr/sbin/mysqld: Forcing close of thread 8  user: 'root'.
+2022-11-08T08:46:09.401527+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T08:46:13.887863+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T08:46:13.931879+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T08:46:14.502938+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T08:46:14.525550+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T08:46:14.755183+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T08:46:14.756334+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T08:46:14.763673+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T08:46:14.841917+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T09:12:48.280864+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T09:12:49.273746+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T09:12:53.936906+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T09:12:53.952543+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T09:12:54.502808+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T09:12:55.075113+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T09:12:55.149589+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T09:12:55.149590+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T09:12:55.149597+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T09:12:55.149579+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T09:31:32.369296+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T09:31:33.977638+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
+2022-11-08T09:31:38.633295+09:00 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.23) starting as process 1
+2022-11-08T09:31:38.709900+09:00 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2022-11-08T09:31:39.441479+09:00 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2022-11-08T09:31:39.711349+09:00 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2022-11-08T09:31:40.112543+09:00 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2022-11-08T09:31:40.116005+09:00 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2022-11-08T09:31:40.131167+09:00 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2022-11-08T09:31:40.310188+09:00 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.23'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2022-11-08T10:00:15.392776+09:00 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.23).
+2022-11-08T10:00:16.695330+09:00 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.23)  MySQL Community Server - GPL.
