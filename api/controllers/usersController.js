@@ -1,21 +1,27 @@
 "use strict";
 
-const User = require("../models").User;
+const Users = require("../models").users,
+      { validationResult } = require('express-validator');
 
 module.exports = {
   login: (req, res, next) => {
-    User.findByPk(1)
-    .then(users => {
-      const usersJson = JSON.stringify(users);
-      console.log(usersJson);
+    Users.findOne({
+      where: {
+        name: req.body.username,
+        password: req.body.password
+      }
+    })
+    .then(() => {
+      res.status(200).end();
     })
     .catch(error => {
       console.error(error);
+      res.status(500).end();
     })
   },
 
   register: (req, res, next) => {
-    User.create({
+    Users.create({
       name: req.body.username,
       password: req.body.password,
       degrees: 1,
@@ -24,11 +30,29 @@ module.exports = {
       inquiry_title: '',
       inquiry_content: ''
     })
-    .then((response) => {
-      console.log(response);
+    .then(() => {
+      res.status(200).end();
     })
     .catch((error) => {
       console.log(error);
+      res.status(500).end();
     });
+  },
+
+  validate: (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      const errorMessages = [];
+      errors.array().forEach(error => {
+        errorMessages.push({
+          param: error.param,
+          msg: error.msg
+        })
+      });
+      console.log(errorMessages);
+      res.status(422).json(errorMessages);
+    } else {
+      next();
+    }
   }
 }

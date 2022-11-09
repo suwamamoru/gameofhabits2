@@ -9,9 +9,11 @@
     </div>
     <div class="div-info">
       <p id="new-username">新規ユーザー名</p>
-      <input type="text" v-model="username" class="info" placeholder="  User Name"><br>
+      <input type="text" v-model="username" class="info" placeholder="  User Name">
+      <p class="errors">{{ usernameError }}</p>
       <p id="new-password">新規パスワード</p>
       <input type="text" v-model="password" class="info" placeholder="  Password">
+      <p class="errors">{{ passwordError }}</p>
     </div>
     <div class="keep-signin">
       <div class="keep-check1">ログインしたままにする</div>
@@ -28,11 +30,15 @@
     data() {
       return {
         username: "",
-        password: ""
+        password: "",
+        usernameError: "",
+        passwordError: ""
       }
     },
     methods: {
       async signup () {
+        this.usernameError = ""
+        this.passwordError = ""
         await this.$axios.$post("/users/register", {
           username: this.username,
           password: this.password
@@ -42,6 +48,14 @@
         })
         .catch((error) => {
           console.log(error);
+          const errors = error.response.data;
+          errors.forEach(error => {
+            if (error.param === "username") {
+              this.usernameError = error.msg
+            } else {
+              this.passwordError = error.msg
+            }
+          })
         });
       }
     }
@@ -87,6 +101,10 @@
     width: 15em;
     max-width: 100%;
     height: 50px;
+  }
+
+  .errors {
+    color: #FF3300;
   }
 
   .keep-signin {

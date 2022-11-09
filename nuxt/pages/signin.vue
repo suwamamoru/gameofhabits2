@@ -24,7 +24,6 @@
 </template>
 
 <script>
-  import axios from "axios";
   export default {
     data() {
       return {
@@ -33,17 +32,11 @@
       }
     },
     methods: {
-      signin: async function () {
-        await axios.post("/api/users/login", {
+      signin() {
+        this.$auth.loginWith('local', {
           username: this.username,
           password: this.password
         })
-        .then(() => {
-          this.$router.push("/dashboard");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       }
     }
   }
