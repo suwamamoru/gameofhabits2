@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <div class="container">
     <header>
       <router-link to="/signup" class="header-btn">新規登録</router-link>
     </header>
@@ -20,23 +20,30 @@
     <footer>
       <button type="button" class="footer-btn" @click="signin">ログイン</button>
     </footer>
-  </section>
+  </div>
 </template>
 
 <script>
   export default {
-    data() {
+    data () {
       return {
         username: "",
         password: ""
       }
     },
     methods: {
-      signin() {
-        this.$auth.loginWith('local', {
-          username: this.username,
-          password: this.password
-        })
+      async signin () {
+        try {
+          await this.$auth.loginWith('local', {
+            data: {
+              username: this.username,
+              password: this.password
+            }
+          });
+          this.$router.push('/dashboard');
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

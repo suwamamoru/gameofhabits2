@@ -1,25 +1,10 @@
 "use strict";
 
 const Users = require("../models").users,
+      passport = require('passport'),
       { validationResult } = require('express-validator');
 
 module.exports = {
-  login: (req, res, next) => {
-    Users.findOne({
-      where: {
-        name: req.body.username,
-        password: req.body.password
-      }
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch(error => {
-      console.error(error);
-      res.status(500).end();
-    })
-  },
-
   register: (req, res, next) => {
     Users.create({
       name: req.body.username,

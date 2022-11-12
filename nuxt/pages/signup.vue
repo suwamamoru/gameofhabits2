@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <div class="container">
     <header>
       <router-link to="/signin" class="header-btn">ログイン</router-link>
     </header>
@@ -22,12 +22,12 @@
     <footer>
       <button type="button" class="footer-btn" @click="signup">新規登録</button>
     </footer>
-  </section>
+  </div>
 </template>
 
 <script>
   export default {
-    data() {
+    data () {
       return {
         username: "",
         password: "",
@@ -39,15 +39,20 @@
       async signup () {
         this.usernameError = ""
         this.passwordError = ""
-        await this.$axios.$post("/users/register", {
+        await this.$axios.$post("/auth/register", {
           username: this.username,
           password: this.password
         })
         .then(() => {
-          this.$router.push("/dashboard");
+          this.$auth.loginWith('local', {
+            data: {
+              username: this.username,
+              password: this.password
+            }
+          })
+          this.$router.push('/dashboard');
         })
         .catch((error) => {
-          console.log(error);
           const errors = error.response.data;
           errors.forEach(error => {
             if (error.param === "username") {

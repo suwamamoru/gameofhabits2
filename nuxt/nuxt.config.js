@@ -62,5 +62,25 @@ export default {
         '^/api': ''
       }
     }
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/auth/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          user: {
+            url: '/auth/verify',
+            method: 'get',
+            propertyName: 'verify'
+          },
+          logout: false
+        }
+      }
+    }
   }
 }

@@ -5,7 +5,6 @@ const express = require('express'),
       usersController = require('../controllers/usersController'),
       { registerValidator } = require('../middleware/registerValidator');
 
-router.post('/login', usersController.login);
 router.post(
   '/register',
   registerValidator(),
