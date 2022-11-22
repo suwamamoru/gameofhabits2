@@ -2,14 +2,10 @@
 
 const express = require('express'),
       router = express.Router(),
-      usersController = require('../controllers/usersController'),
-      { registerValidator } = require('../middleware/registerValidator');
+      usersController = require('../controllers/usersController');
 
-router.post(
-  '/register',
-  registerValidator(),
-  usersController.validate,
-  usersController.register
-);
+router.post('/getUser', usersController.getUser);
+router.post('/getHabit', usersController.getHabit);
+router.post('/getDegree', usersController.getDegree);
 
 module.exports = router;

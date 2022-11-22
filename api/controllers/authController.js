@@ -1,25 +1,31 @@
 'use strict';
 
-const Users = require('../models').users,
+const User = require('../models').User,
       jwt = require('jsonwebtoken'),
       bcrypt = require('bcrypt'),
       { validationResult } = require('express-validator');
 
 module.exports = {
-  loginJwt: async (req, res, next) => {
-    const user = await Users.findOne({ where: { name: req.body.username } });
-    await bcrypt.compare(req.body.password, user.password)
-    .then(() => {
-      const token = jwt.sign({
-        name: req.body.username,
-        password: req.body.password
-      }, "secretKey");
-      res.json({ token });
-    })
-    .catch(error => {
+  login: async (req, res, next) => {
+    try {
+      const user = await User.findOne({ where: { name: req.body.username } });
+      if (user) {
+        const password = await bcrypt.compare(req.body.password, user.password)
+        if (password) {
+          next();
+        } else res.status(403).json('パスワードに誤りがあります。');
+      } else res.status(403).json('このユーザーは存在しません。');
+    } catch (error) {
       console.log(error);
-      res.status(403).json('ユーザーが存在しないか、パスワードに誤りがあります。');
-    });
+    }
+  },
+
+  jwt: (req, res, next) => {
+    const token = jwt.sign({
+      name: req.body.username,
+      password: req.body.password
+    }, "secretKey");
+    res.json({ token });
   },
 
   verify: (req, res, next) => {
@@ -43,7 +49,7 @@ module.exports = {
           msg: error.msg
         })
       });
-      res.status(422).json(errorMessages);
+      res.status(403).json(errorMessages);
     } else {
       next();
     }
@@ -51,14 +57,9 @@ module.exports = {
 
   register: async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    Users.create({
+    User.create({
       name: req.body.username,
-      password: hashedPassword,
-      degrees: 1,
-      sp: 0,
-      habits: 0,
-      inquiry_title: '',
-      inquiry_content: ''
+      password: hashedPassword
     })
     .then(() => {
       res.status(200).end();

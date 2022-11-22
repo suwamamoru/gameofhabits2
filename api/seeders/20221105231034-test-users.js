@@ -5,14 +5,21 @@ const db = require('../models/');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
-      'users',
+      'Users',
       [
         {
           name: 'user1',
-          password: 'test',
-          degrees: 1,
+          password: '$2b$10$aqCbXLqGmqqs6TFBKH4i4.uxOEz0fLM32FRGtO0UHI6I4Ltec.3e.',
           sp: 0,
-          habits: 0,
+          inquiry_title: '',
+          inquiry_content: '',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          name: 'user2',
+          password: '$2b$10$aqCbXLqGmqqs6TFBKH4i4.uxOEz0fLM32FRGtO0UHI6I4Ltec.3e.',
+          sp: 0,
           inquiry_title: '',
           inquiry_content: '',
           createdAt: new Date(),
@@ -24,6 +31,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('users', null, {});
+    return queryInterface.bulkDelete('Users', null, {});
   }
 };

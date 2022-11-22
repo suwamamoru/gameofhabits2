@@ -37,7 +37,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'nuxt-icon'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -65,18 +66,27 @@ export default {
   },
 
   auth: {
+    router: {
+      middleware: ['auth']
+    },
+    redirect: {
+      login: '/signin',
+      logout: '/signin',
+      callback: false,
+      home: '/dashboard'
+    },
     strategies: {
       local: {
         endpoints: {
           login: {
             url: '/auth/login',
             method: 'post',
-            propertyName: 'token'
+            property: 'token'
           },
           user: {
             url: '/auth/verify',
             method: 'get',
-            propertyName: 'verify'
+            property: 'verify'
           },
           logout: false
         }

@@ -1,43 +1,60 @@
-"use strict";
+'use strict';
 
-const Users = require("../models").users,
-      passport = require('passport'),
-      { validationResult } = require('express-validator');
+const User = require('../models').User,
+      Habit = require('../models').Habit,
+      UserDegree = require('../models').UserDegree,
+      Degree = require('../models').Degree;
 
 module.exports = {
-  register: (req, res, next) => {
-    Users.create({
-      name: req.body.username,
-      password: req.body.password,
-      degrees: 1,
-      sp: 0,
-      habits: 0,
-      inquiry_title: '',
-      inquiry_content: ''
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).end();
-    });
-  },
-
-  validate: (req, res, next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-      const errorMessages = [];
-      errors.array().forEach(error => {
-        errorMessages.push({
-          param: error.param,
-          msg: error.msg
-        })
+  getUser: async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          name: req.body.name
+        }
       });
-      console.log(errorMessages);
-      res.status(422).json(errorMessages);
-    } else {
-      next();
+      res.status(200).json(user);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getHabit: async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          name: req.body.name
+        }
+      });
+      const habit = await Habit.findAll({
+        where: {
+          userId: user.id
+        }
+      });
+      res.status(200).json(habit);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getDegree: async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          name: req.body.name
+        }
+      });
+      const userDegree = await UserDegree.findOne({
+        where: {
+          userId: user.id
+        }
+      });
+      const degree = await Degree.findOne({
+        where: {
+          id: userDegree.degreeId
+        }
+      });
+      res.status(200).json(degree);
+    } catch (error) {
+      console.log(error);
     }
   }
 }

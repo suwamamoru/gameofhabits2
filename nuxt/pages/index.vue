@@ -1,7 +1,7 @@
 <template>
-  <section class="container">
+  <div class="index">
     <header>
-      <router-link to="/signin" class="header-btn">ログイン</router-link>
+      <NuxtLink to="/signin" class="header-btn">ログイン</NuxtLink>
     </header>
     <div class="title">
       <h1 class="millionaire">習慣大富豪</h1>
@@ -17,24 +17,38 @@
       <p id="explanation-contents">答えは、良い習慣を身につけることだ。</p>
       <p id="explanation-contents">さあ、成功への扉を開こう。</p>
     </div>
-    <footer>
-      <router-link to="/signup" class="footer-btn">新規登録はこちら</router-link>
-    </footer>
-  </section>
+    <div class="register-guide">
+      <NuxtLink to="/signup" class="register-guide-btn">新規登録はこちら</NuxtLink>
+    </div>
+  </div>
 </template>
 
-<style>
-  .header-btn {
-    display: inline-block;
+<style scoped>
+  .index {
+    height: 100vh;
+    color: white;
+    font-family: Hiragino Mincho Pro;
+    background-color: #48698E;
+  }
+  header {
+    display: table;
+    width: 100vw;
+    height: 60px;
     background-color: #474747;
+  }
+  .header-btn {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+    padding-right: 45px;
     border: none;
     text-decoration: none;
-    position: relative;
-    top: 10px;
-    left: 200px;
-    font-size: 15px;
+    font-size: 18px;
+    color: white;
   }
-
+  .header-btn:hover {
+    color: #f7797d;
+  }
   .title {
     margin: 1em 0px;
     text-align: center;
@@ -55,18 +69,25 @@
     margin: 0.5em 0px;
   }
 
-  .footer-btn {
+  .register-guide {
+    display: flex;
+    justify-content: center;
+  }
+  .register-guide-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    border-style: none;
     width: 170px;
     height: 50px;
     background-color: #FF0000;
+    font-family: Hiragino Mincho Pro;
+    color: white;
     border-radius: 100vh;
     font-size: 16px;
   }
-  .footer-btn:hover {
+  .register-guide-btn:hover {
     background-color: #EE0000;
   }
 </style>

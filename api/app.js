@@ -7,6 +7,7 @@ const express = require('express'),
       path = require('path'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
+      expressSession = require('express-session'),
       cors = require('cors');
 
 // CORS setup
@@ -23,7 +24,17 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('secretKey'));
+app.use(
+  expressSession({
+    secret: 'secretKey',
+    cookie: {
+      maxAge: 30 * 60 * 1000
+    },
+    resave: false,
+    saveUninitialized: false
+  })
+);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {

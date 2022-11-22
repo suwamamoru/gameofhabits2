@@ -5,7 +5,11 @@ const express = require('express'),
       authController = require('../controllers/authController'),
       { registerValidator } = require('../middleware/registerValidator');
 
-router.post('/login', authController.loginJwt);
+router.post(
+  '/login',
+  authController.login,
+  authController.jwt
+);
 router.get('/verify', authController.verify);
 router.post(
   '/register',
