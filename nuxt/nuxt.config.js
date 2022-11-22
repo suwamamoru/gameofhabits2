@@ -37,8 +37,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
-    'nuxt-icon'
+    '@nuxtjs/auth'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -66,13 +65,9 @@ export default {
   },
 
   auth: {
-    router: {
-      middleware: ['auth']
-    },
     redirect: {
       login: '/signin',
       logout: '/signin',
-      callback: false,
       home: '/dashboard'
     },
     strategies: {
