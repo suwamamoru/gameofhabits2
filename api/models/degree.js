@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         through: models.UserDegree,
         foreignKey: 'userId'
       });
+      Degree.hasMany(models.UserDegree, {
+        foreignKey: 'degreeId'
+      });
     }
   }
   Degree.init({

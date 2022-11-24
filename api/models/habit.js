@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       });
+      Habit.belongsToMany(models.AchieveDay, {
+        through: models.HabitAchieveDay,
+        foreignKey: 'achieveDayId'
+      });
     }
   }
   Habit.init({
@@ -27,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     ingenuity: DataTypes.STRING,
     combos: DataTypes.INTEGER,
     continue_days: DataTypes.INTEGER,
-    achieve_days: DataTypes.INTEGER,
     iine: DataTypes.INTEGER
   }, {
     sequelize,

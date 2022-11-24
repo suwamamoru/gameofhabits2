@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Achieve_days', {
+    await queryInterface.createTable('AchieveDays', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,6 +11,9 @@ module.exports = {
       },
       date: {
         type: Sequelize.DATE
+      },
+      week: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -23,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Achieve_days');
+    await queryInterface.dropTable('AchieveDays');
   }
 };

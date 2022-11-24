@@ -7,5 +7,6 @@ const express = require('express'),
 router.post('/getUser', usersController.getUser);
 router.post('/getHabit', usersController.getHabit);
 router.post('/getDegree', usersController.getDegree);
+router.post('/getUserData', usersController.getUserData);
 
 module.exports = router;

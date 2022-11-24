@@ -38,6 +38,7 @@
         </div>
       </div>
     </div>
+    {{ userData }}
     <div class="add-contents">
       <Icon id="add-icon" icon="ant-design:plus-circle-outlined" />
     </div>
@@ -61,25 +62,30 @@
         displaySidenav: false,
         user: {},
         habits: [],
-        degree: {}
+        degree: {},
+        userData: []
       }
     },
     created: async function () {
       try {
-        const user = await this.$axios.$post('/users/getUser', {
+        // const user = await this.$axios.$post('/users/getUser', {
+        //   name: this.$auth.user.name
+        // });
+        // this.user = user;
+        // const habits = await this.$axios.$post('/users/getHabit', {
+        //   name: this.$auth.user.name
+        // });
+        // habits.forEach(habit => {
+        //   this.habits.push(habit);
+        // });
+        // const degree = await this.$axios.$post('/users/getDegree', {
+        //   name: this.$auth.user.name
+        // });
+        // this.degree = degree;
+        const userData = await this.$axios.$post('/users/getUserData', {
           name: this.$auth.user.name
         });
-        this.user = user;
-        const habits = await this.$axios.$post('/users/getHabit', {
-          name: this.$auth.user.name
-        });
-        habits.forEach(habit => {
-          this.habits.push(habit);
-        });
-        const degree = await this.$axios.$post('/users/getDegree', {
-          name: this.$auth.user.name
-        });
-        this.degree = degree;
+        this.userData = userData;
       } catch (error) {
         console.log(error);
       }

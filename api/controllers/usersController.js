@@ -1,9 +1,13 @@
 'use strict';
 
+const { Model } = require('sequelize');
+
 const User = require('../models').User,
       Habit = require('../models').Habit,
       UserDegree = require('../models').UserDegree,
-      Degree = require('../models').Degree;
+      Degree = require('../models').Degree,
+      HabitAchieveDay = require('../models/habitAchieveDay').HabitAchieveDay,
+      AchieveDay = require('../models/achieveDay').AchieveDay;
 
 module.exports = {
   getUser: async (req, res, next) => {
@@ -53,6 +57,23 @@ module.exports = {
         }
       });
       res.status(200).json(degree);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getUserData: async (req, res, next) => {
+    try {
+      const userData = await User.findOne({
+        where: {
+          name: req.body.name
+        },
+        attributes: ['name', 'sp'],
+        include: [
+          { model: Habit, attributes: ['title', 'tag1', 'tag2', 'tag3', 'combos'] },
+          { model: Degree, include: { model: UserDegree } }
+        ]
+      })
+      res.status(200).json(userData);
     } catch (error) {
       console.log(error);
     }

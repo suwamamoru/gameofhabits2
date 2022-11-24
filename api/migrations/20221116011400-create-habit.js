@@ -43,9 +43,6 @@ module.exports = {
       continue_days: {
         type: Sequelize.INTEGER
       },
-      achieve_days: {
-        type: Sequelize.INTEGER
-      },
       iine: {
         type: Sequelize.INTEGER
       },
