@@ -12,10 +12,10 @@
             <p class="submenu-headline">ステータス</p>
           </li>
           <li class="nav-item">
-            <p class="status-item">称号：{{ degree.name }}</p>
+            <p class="status-item">称号：{{ userData.Degree.name }}</p>
           </li>
           <li class="nav-item">
-            <p class="status-item">SP：{{ user.sp }}</p>
+            <p class="status-item">SP：{{ userData.sp }}</p>
           </li>
           <li class="">
             <p class="submenu-headline">サブメニュー</p>
@@ -37,11 +37,11 @@
         type: Boolean,
         default: false
       },
-      user: {
+      userData: {
+        Degree: {
+          name: String
+        },
         sp: Number
-      },
-      degree: {
-        name: String
       }
     }
   }

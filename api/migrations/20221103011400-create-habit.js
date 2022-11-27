@@ -40,7 +40,7 @@ module.exports = {
       combos: {
         type: Sequelize.INTEGER
       },
-      continue_days: {
+      successDays: {
         type: Sequelize.INTEGER
       },
       iine: {

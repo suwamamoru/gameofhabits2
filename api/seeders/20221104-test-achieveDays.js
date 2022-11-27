@@ -8,44 +8,42 @@ module.exports = {
       'AchieveDays',
       [
         {
-          date: '2022-11-21 10:10:10',
-          week: 'Monday',
+          year: 2022,
+          month: 11,
+          day: 21,
+          week: '月',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          date: '2022-11-22 10:10:10',
-          week: 'Tuesday',
+          year: 2022,
+          month: 11,
+          day: 22,
+          week: '火',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          date: '2022-11-23 10:10:10',
-          week: 'Wednesday',
+          year: 2022,
+          month: 11,
+          day: 23,
+          week: '水',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          date: '2022-11-24 10:10:10',
-          week: 'Thursday',
+          year: 2022,
+          month: 11,
+          day: 24,
+          week: '木',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          date: '2022-11-25 10:10:10',
-          week: 'Friday',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          date: '2022-11-26 10:10:10',
-          week: 'Saturday',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          date: '2022-11-27 10:10:10',
-          week: 'Sunday',
+          year: 2022,
+          month: 11,
+          day: 25,
+          week: '金',
           createdAt: new Date(),
           updatedAt: new Date()
         },

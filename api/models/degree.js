@@ -10,12 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Degree.belongsToMany(models.User, {
-        through: models.UserDegree,
-        foreignKey: 'userId'
-      });
-      Degree.hasMany(models.UserDegree, {
-        foreignKey: 'degreeId'
+      Degree.hasMany(models.User, {
+        foreignKey: 'degreeId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       });
     }
   }

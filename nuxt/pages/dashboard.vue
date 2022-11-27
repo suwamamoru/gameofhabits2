@@ -5,10 +5,9 @@
       <TheSideNav
         :show="displaySidenav"
         @close="displaySidenav = false"
-        :user="user"
-        :degree="degree" />
+        :userData="userData" />
     </header>
-    <div class="contents" v-for="habit in habits" :key="habit">
+    <div class="contents" v-for="habit in userData.Habits" :key="habit">
       <div class="content">
         <table class="habits-header">
           <tr>
@@ -23,17 +22,46 @@
         </table>
         <div class="habits-contents">
           <div class="date">
-            <p class="day">7/1<br>(金)</p>
-            <p class="day">7/2<br>(土)</p>
-            <p class="day">7/3<br>(日)</p>
-            <p class="day">7/4<br>(月)</p>
-            <p class="day">7/5<br>(火)</p>
-            <p class="day">7/6<br>(水)</p>
-            <p class="day">7/7<br>(木)</p>
+            <div v-for="week in thisWeek" :key="week">  <!-- 今週1週間のカレンダーを生成する -->
+              <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 達成日を持ってくる -->
+                <p class="day"
+                  :style="(week.day === achieveDay.AchieveDay.day)
+                  ? 'background-color:#55ACEE':'display:none'">  <!-- 達成日を青色にする。それ以外は非表示 -->
+                  {{ week.month }}/{{ week.day }}
+                  <span
+                    :style="(week.week === '土') ? 'color:#005DB9'
+                    :(week.week === '日') ? 'color:#FF0000'
+                    :'color:#000000'">  <!-- 土日の色をそれぞれ青赤にする。それ以外は黒 -->
+                    ({{ week.week }})
+                  </span>
+                </p>
+              </div>
+              <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 達成日を持ってくる -->
+                <p class="day"
+                  :style="(week.day !== achieveDay.AchieveDay.day)
+                  ? 'background-color:#D9D9D9':'display:none'">  <!-- 達成日でない日を灰色にする。それ以外は非表示 -->
+                  {{ week.month }}/{{ week.day }}
+                  <span
+                    :style="(week.week === '土') ? 'color:#005DB9'
+                    :(week.week === '日') ? 'color:#FF0000'
+                    :'color:#000000'">
+                    ({{ week.week }})
+                  </span>
+                </p>
+              </div>
+              <!-- <p class="day">{{ week.month }}/{{ week.day }}
+                <span
+                  :style="(week.week === '土') ? 'color:#005DB9'
+                  :(week.week === '日') ? 'color:#FF0000'
+                  :'color:#000000'">
+                  ({{ week.week }})
+                </span>
+              </p> -->
+            </div>
           </div>
           <div class="status">
             <p id="combos">コンボ倍数：{{ habit.combos }}倍</p>
-            <p id="success">進捗状況：現在{{ habit.continue_days }}日連続成功、合計10日成功</p>
+            <p id="success">累計{{ habit.successDays }}日成功</p>
           </div>
         </div>
       </div>
@@ -60,32 +88,22 @@
     data () {
       return {
         displaySidenav: false,
-        user: {},
-        habits: [],
-        degree: {},
-        userData: []
+        userData: {},
+        thisWeek: []
       }
     },
     created: async function () {
       try {
-        // const user = await this.$axios.$post('/users/getUser', {
-        //   name: this.$auth.user.name
-        // });
-        // this.user = user;
-        // const habits = await this.$axios.$post('/users/getHabit', {
-        //   name: this.$auth.user.name
-        // });
-        // habits.forEach(habit => {
-        //   this.habits.push(habit);
-        // });
-        // const degree = await this.$axios.$post('/users/getDegree', {
-        //   name: this.$auth.user.name
-        // });
-        // this.degree = degree;
         const userData = await this.$axios.$post('/users/getUserData', {
           name: this.$auth.user.name
         });
         this.userData = userData;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const thisWeek = await this.$axios.$get('/users/thisWeek');
+        this.thisWeek = thisWeek;
       } catch (error) {
         console.log(error);
       }
@@ -129,12 +147,14 @@
   }
   .day {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #55ACEE;
+    background-color: #D9D9D9;
   }
   #combos, #success {
     margin-left: 10px;

@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         through: models.HabitAchieveDay,
         foreignKey: 'achieveDayId'
       });
+      Habit.hasMany(models.HabitAchieveDay, {
+        foreignKey: 'habitId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      });
     }
   }
   Habit.init({
@@ -30,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     tag3: DataTypes.STRING,
     ingenuity: DataTypes.STRING,
     combos: DataTypes.INTEGER,
-    continue_days: DataTypes.INTEGER,
+    successDays: DataTypes.INTEGER,
     iine: DataTypes.INTEGER
   }, {
     sequelize,

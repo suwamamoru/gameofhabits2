@@ -9,8 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      date: {
-        type: Sequelize.DATE
+      year: {
+        type: Sequelize.INTEGER
+      },
+      month: {
+        type: Sequelize.INTEGER
+      },
+      day: {
+        type: Sequelize.INTEGER
       },
       week: {
         type: Sequelize.STRING

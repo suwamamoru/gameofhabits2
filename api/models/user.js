@@ -11,11 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.Habit, {
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       });
-      User.belongsToMany(models.Degree, {
-        through: models.UserDegree,
-        foreignKey: 'degreeId'
+      User.belongsTo(models.Degree, {
+        foreignKey: 'degreeId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       });
     }
   }
@@ -23,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     password: DataTypes.STRING,
     sp: DataTypes.INTEGER,
+    degreeId: DataTypes.INTEGER,
     inquiry_title: DataTypes.STRING,
     inquiry_content: DataTypes.STRING
   }, {

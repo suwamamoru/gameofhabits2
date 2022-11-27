@@ -16,7 +16,7 @@ module.exports = {
           tag3: '',
           ingenuity: '朝起きたらなるべく早く外に出る',
           combos: 0,
-          continue_days: 0,
+          successDays: 0,
           iine: 0,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -30,7 +30,7 @@ module.exports = {
           tag3: '',
           ingenuity: 'スクリーンタイムで21時に画面消灯するように設定',
           combos: 6,
-          continue_days: 6,
+          successDays: 6,
           iine: 0,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -44,7 +44,7 @@ module.exports = {
           tag3: '',
           ingenuity: 'ベッドを窓際に設置する',
           combos: 0,
-          continue_days: 0,
+          successDays: 0,
           iine: 0,
           createdAt: new Date(),
           updatedAt: new Date()

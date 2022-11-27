@@ -10,7 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      
+      HabitAchieveDay.belongsTo(models.Habit, {
+        foreignKey: 'habitId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      });
+      HabitAchieveDay.belongsTo(models.AchieveDay, {
+        foreignKey: 'achieveDayId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      });
     }
   }
   HabitAchieveDay.init({

@@ -19,6 +19,12 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date()
         },
+        {
+          habitId: 2,
+          achieveDayId: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
       ],
       {}
     );

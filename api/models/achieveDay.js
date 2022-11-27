@@ -14,10 +14,17 @@ module.exports = (sequelize, DataTypes) => {
         through: models.HabitAchieveDay,
         foreignKey: 'habitId'
       });
+      AchieveDay.hasMany(models.HabitAchieveDay, {
+        foreignKey: 'achieveDayId',
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      });
     }
   }
   AchieveDay.init({
-    date: DataTypes.DATE,
+    year: DataTypes.INTEGER,
+    month: DataTypes.INTEGER,
+    day: DataTypes.INTEGER,
     week: DataTypes.STRING
   }, {
     sequelize,

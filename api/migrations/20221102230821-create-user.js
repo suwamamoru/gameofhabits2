@@ -2,22 +2,21 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserDegrees', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+      name: {
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+      },
+      sp: {
+        type: Sequelize.INTEGER
       },
       degreeId: {
         type: Sequelize.INTEGER,
@@ -28,6 +27,12 @@ module.exports = {
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
+      },
+      inquiry_title: {
+        type: Sequelize.STRING
+      },
+      inquiry_content: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserDegrees');
+    await queryInterface.dropTable('Users');
   }
 };
