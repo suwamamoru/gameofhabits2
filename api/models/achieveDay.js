@@ -25,9 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     year: DataTypes.INTEGER,
     month: DataTypes.INTEGER,
     day: DataTypes.INTEGER,
-    week: DataTypes.STRING
+    week: DataTypes.STRING,
+    achieved: DataTypes.BOOLEAN
   }, {
     sequelize,
+    paranoid: true,
     modelName: 'AchieveDay',
   });
   return AchieveDay;

@@ -68,7 +68,8 @@ export default {
     redirect: {
       login: '/signin',
       logout: '/signin',
-      home: false
+      callback: false,
+      home: '/dashboard'
     },
     strategies: {
       local: {

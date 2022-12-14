@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     achieveDayId: DataTypes.INTEGER
   }, {
     sequelize,
+    paranoid: true,
     modelName: 'HabitAchieveDay',
   });
   return HabitAchieveDay;

@@ -15,7 +15,14 @@ router.post(
   '/register',
   registerValidator(),
   authController.validate,
-  authController.register
+  authController.checkSameUser,
+  authController.createUser,
+  authController.getUserId,
+  authController.createHabit,
+  authController.getHabitId,
+  authController.createAchieveDays,
+  authController.countAchieveDays,
+  authController.createHabitAchieveDays
 );
 
 module.exports = router;

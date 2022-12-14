@@ -20,8 +20,11 @@
           <li class="">
             <p class="submenu-headline">サブメニュー</p>
           </li>
+          <li class="nav-item" v-if="toDashboardShow">
+            <button class="submenu-btn" type="button" @click="toDashboard()">ダッシュボードに戻る</button>
+          </li>
           <li class="nav-item">
-            <button class="logout-btn" type="button" @click="$auth.logout()">ログアウト</button>
+            <button class="submenu-btn" type="button" @click="$auth.logout()">ログアウト</button>
           </li>
         </ul>
       </div>
@@ -37,11 +40,20 @@
         type: Boolean,
         default: false
       },
+      toDashboardShow: {
+        type: Boolean,
+        default: false
+      },
       userData: {
         Degree: {
           name: String
         },
         sp: Number
+      }
+    },
+    methods: {
+      toDashboard () {
+        this.$router.push({ path: '/dashboard' });
       }
     }
   }
@@ -93,7 +105,7 @@
 .status-item {
   font-size: 18px;
 }
-.logout-btn {
+.submenu-btn {
   border: none;
   background-color: black;
   color: white;
@@ -101,6 +113,7 @@
   font-size: 18px;
   padding-left: 0;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 .logout-btn:hover {
   color: #f7797d;

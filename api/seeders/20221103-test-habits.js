@@ -15,11 +15,13 @@ module.exports = {
           tag2: 'ウォーキング',
           tag3: '',
           ingenuity: '朝起きたらなるべく早く外に出る',
-          combos: 0,
+          combos: 3,
           successDays: 0,
           iine: 0,
+          todayAchieved: false,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          deletedAt: null
         },
         {
           userId: 1,
@@ -32,8 +34,10 @@ module.exports = {
           combos: 6,
           successDays: 6,
           iine: 0,
+          todayAchieved: false,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          deletedAt: null
         },
         {
           userId: 2,
@@ -43,11 +47,13 @@ module.exports = {
           tag2: '早起き',
           tag3: '',
           ingenuity: 'ベッドを窓際に設置する',
-          combos: 0,
+          combos: 2,
           successDays: 0,
           iine: 0,
+          todayAchieved: false,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          deletedAt: null
         }
       ],
       {}

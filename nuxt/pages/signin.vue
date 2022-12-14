@@ -49,7 +49,6 @@
           await this.$auth.loginWith('local', {
             data: this.login
           })
-          this.$router.push({ path: '/dashboard' });
         } catch (error) {
           const errorResponse = error.response.data;
           if (errorResponse === 'このユーザーは存在しません。') {

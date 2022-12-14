@@ -5,10 +5,11 @@
       <TheSideNav
         :show="displaySidenav"
         @close="displaySidenav = false"
+        :toDashboardShow="displayToDashboard"
         :userData="userData" />
     </header>
-    <div class="contents" v-for="habit in userData.Habits" :key="habit">
-      <div class="content">
+    <div class="contents">
+      <div class="content" v-for="habit in userData.Habits" :key="habit">
         <table class="habits-header">
           <tr>
             <h2 class="title">{{ habit.title }}</h2>
@@ -22,54 +23,44 @@
         </table>
         <div class="habits-contents">
           <div class="date">
-            <div v-for="week in thisWeek" :key="week">  <!-- 今週1週間のカレンダーを生成する -->
-              <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 達成日を持ってくる -->
-                <p class="day"
-                  :style="(week.day === achieveDay.AchieveDay.day)
-                  ? 'background-color:#55ACEE':'display:none'">  <!-- 達成日を青色にする。それ以外は非表示 -->
-                  {{ week.month }}/{{ week.day }}
-                  <span
-                    :style="(week.week === '土') ? 'color:#005DB9'
-                    :(week.week === '日') ? 'color:#FF0000'
-                    :'color:#000000'">  <!-- 土日の色をそれぞれ青赤にする。それ以外は黒 -->
-                    ({{ week.week }})
-                  </span>
-                </p>
-              </div>
-              <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 達成日を持ってくる -->
-                <p class="day"
-                  :style="(week.day !== achieveDay.AchieveDay.day)
-                  ? 'background-color:#D9D9D9':'display:none'">  <!-- 達成日でない日を灰色にする。それ以外は非表示 -->
-                  {{ week.month }}/{{ week.day }}
-                  <span
-                    :style="(week.week === '土') ? 'color:#005DB9'
-                    :(week.week === '日') ? 'color:#FF0000'
-                    :'color:#000000'">
-                    ({{ week.week }})
-                  </span>
-                </p>
-              </div>
-              <!-- <p class="day">{{ week.month }}/{{ week.day }}
+            <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 今週1週間のカレンダーを生成する -->
+              <p class="day"
+                :style="(achieveDay.AchieveDay.achieved === true)
+                ? 'background-color:#55ACEE':'background-color:#D9D9D9'">  <!-- 達成日を青色にする。それ以外は非表示 -->
+                {{ achieveDay.AchieveDay.month }}/{{ achieveDay.AchieveDay.day }}
                 <span
-                  :style="(week.week === '土') ? 'color:#005DB9'
-                  :(week.week === '日') ? 'color:#FF0000'
-                  :'color:#000000'">
-                  ({{ week.week }})
+                  :style="(achieveDay.AchieveDay.week === '土') ? 'color:#005DB9'
+                  :(achieveDay.AchieveDay.week === '日') ? 'color:#FF0000'
+                  :'color:#000000'">  <!-- 土日の色をそれぞれ青赤にする。それ以外は黒 -->
+                  ({{ achieveDay.AchieveDay.week }})
                 </span>
-              </p> -->
+              </p>
             </div>
           </div>
           <div class="status">
-            <p id="combos">コンボ倍数：{{ habit.combos }}倍</p>
-            <p id="success">累計{{ habit.successDays }}日成功</p>
+            <p id="ingenuity">工夫：{{ habit.ingenuity }}</p>
+            <div class="combos-and-success">
+              <p id="combos">コンボ倍数：{{ habit.combos }}倍</p>
+              <p id="success">累計{{ habit.successDays }}日成功</p>
+            </div>
+          </div>
+          <div class="forms">
+            <form class="gacha-form" @submit.prevent="gacha(habit)">
+              <input
+                type="submit" id="gacha" value="目標達成！"
+                :style="(habit.todayAchieved === true) ? 'background-color:#D9D9D9'
+                :'background-color:#FF0000'">
+            </form>
+            <form class="edit-form" @submit.prevent="edit(habit)">
+              <input type="submit" id="edit" value="編集する！">
+            </form>
           </div>
         </div>
       </div>
     </div>
-    {{ userData }}
-    <div class="add-contents">
-      <Icon id="add-icon" icon="ant-design:plus-circle-outlined" />
-    </div>
+    <form class="add-contents" @submit.prevent="create()" v-show="(habitsLength < 3)">
+      <button class="add-button" type="submit"><Icon id="add-icon" icon="ant-design:plus-circle-outlined" /></button>
+    </form>
   </div>
 </template>
 
@@ -88,8 +79,9 @@
     data () {
       return {
         displaySidenav: false,
+        displayToDashboard: false,
         userData: {},
-        thisWeek: []
+        habitsLength: ''
       }
     },
     created: async function () {
@@ -98,14 +90,55 @@
           name: this.$auth.user.name
         });
         this.userData = userData;
+        this.habitsLength = userData.Habits.length;
       } catch (error) {
         console.log(error);
       }
-      try {
-        const thisWeek = await this.$axios.$get('/users/thisWeek');
-        this.thisWeek = thisWeek;
-      } catch (error) {
-        console.log(error);
+    },
+    methods: {
+      create () {
+        this.$router.push({ path: '/create' });
+      },
+      edit (habit) {
+        this.$router.push({
+          path: '/edit',
+          name: 'edit',
+          params: {
+            id: habit.id
+          }
+        });
+      },
+      gacha (habit) {
+        this.$router.push({
+          path: '/gacha',
+          name: 'gacha',
+          params: {
+            id: habit.id
+          }
+        });
+        this.userData.Habits.forEach(habit => {
+          habit.HabitAchieveDays.forEach(achieveDay => {
+            this.week.push({
+              year: achieveDay.AchieveDay.year,
+              month: achieveDay.AchieveDay.month,
+              day: achieveDay.AchieveDay.day,
+              achieved: achieveDay.AchieveDay.achieved
+            })
+          })
+        })
+        this.week.forEach(date => {
+          if (
+            date.year === this.getToday.year &&
+            date.month === this.getToday.month &&
+            date.day === this.getToday.day &&
+            date.achieved === true
+          ) {
+            this.achieved.push(true);
+          }
+        })
+        this.userData.Habits.forEach((habit, i) => {
+          habit.todayAchieved = this.achieved[i];
+        });
       }
     }
   }
@@ -113,12 +146,12 @@
 
 <style scoped>
   .dashboard {
-    height: 100%;
+    height: 1100px;
     color: white;
     font-family: Hiragino Mincho Pro;
     background-color: #48698E;
   }
-  .content {
+  .contents {
     width: 70vw;
     margin: auto;
   }
@@ -156,18 +189,69 @@
     border-radius: 50%;
     background-color: #D9D9D9;
   }
-  #combos, #success {
+  .combos-and-success {
+    display: flex;
+  }
+  #ingenuity, #combos, #success {
     margin-left: 10px;
     margin-top: 0;
     margin-bottom: 0;
+  }
+  .forms {
+    display: flex;
+    justify-content: space-between;
+  }
+  .gacha-form {
+    margin-left: 10px;
+  }
+  #gacha {
+    border-style: none;
+    background-color: #FF0000;
+    font-family: Hiragino Mincho Pro;
+    color: #FFF;
+    width: 90px;
+    height: 30px;
+    border-radius: 0.5rem;
+    margin-bottom: 10px;
+  }
+  #gacha:hover {
+    background-color: #EE0000;
+    cursor: pointer;
+  }
+  .edit-form {
+    margin-right: 10px;
+  }
+  #edit {
+    border-style: none;
+    background-color: #55ACEE;
+    font-family: Hiragino Mincho Pro;
+    color: #FFF;
+    width: 90px;
+    height: 30px;
+    border-radius: 0.5rem;
+    margin-bottom: 10px;
+  }
+  #edit:hover {
+    background-color: #53AACC;
+    cursor: pointer;
   }
   .add-contents {
     display: flex;
     justify-content: center;
     margin-top: 130px;
   }
+  .add-button {
+    background-color: #48698E;
+    border: none;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 150px;
+  }
   #add-icon {
+    color: #FFF;
     font-size: 40px;
-    margin-bottom: 130px;
+  }
+  #add-icon:hover {
+    cursor: pointer;
   }
 </style>

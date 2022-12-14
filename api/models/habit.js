@@ -36,9 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     ingenuity: DataTypes.STRING,
     combos: DataTypes.INTEGER,
     successDays: DataTypes.INTEGER,
-    iine: DataTypes.INTEGER
+    iine: DataTypes.INTEGER,
+    todayAchieved: DataTypes.BOOLEAN
   }, {
     sequelize,
+    paranoid: true,
     modelName: 'Habit',
   });
   return Habit;
