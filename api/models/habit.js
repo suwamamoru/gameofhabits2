@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     combos: DataTypes.INTEGER,
     successDays: DataTypes.INTEGER,
     iine: DataTypes.INTEGER,
-    todayAchieved: DataTypes.BOOLEAN
+    todayAchieved: DataTypes.BOOLEAN,
+    dayBeforeYesterdayAchieved: DataTypes.BOOLEAN
   }, {
     sequelize,
     paranoid: true,

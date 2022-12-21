@@ -21,7 +21,7 @@
             <p class="submenu-headline">サブメニュー</p>
           </li>
           <li class="nav-item" v-if="toDashboardShow">
-            <button class="submenu-btn" type="button" @click="toDashboard()">ダッシュボードに戻る</button>
+            <button class="submenu-btn" type="button" @click="toDashboard()">ホームに戻る</button>
           </li>
           <li class="nav-item">
             <button class="submenu-btn" type="button" @click="$auth.logout()">ログアウト</button>

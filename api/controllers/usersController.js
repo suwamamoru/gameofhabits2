@@ -17,7 +17,7 @@ module.exports = {
         include: [
           {
             model: Habit,
-            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'combos', 'successDays', 'todayAchieved'],
+            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'combos', 'successDays', 'todayAchieved', 'dayBeforeYesterdayAchieved'],
             include: [{
               model: HabitAchieveDay,
               attributes: ['id'],
@@ -30,7 +30,8 @@ module.exports = {
       res.locals.userData = userData;
       next();
     } catch (error) {
-      console.log(error);
+      console.log('getUserData error: ' + error);
+      res.status(500).end();
     }
   },
 
@@ -60,42 +61,6 @@ module.exports = {
     next();
   },
 
-  todayAchieved: async (req, res, next) => {
-    const week = [],
-          today = new Date(),
-          thisYear = today.getFullYear(),
-          thisMonth = today.getMonth() + 1,
-          day = today.getDate();
-    week.push({
-      year: thisYear,
-      month: thisMonth,
-      day: day
-    });
-    try {
-      await User.findOne({
-        where: {
-          name: req.body.name
-        },
-        attributes: ['id', 'name', 'sp', 'degreeId'],
-        include: [
-          {
-            model: Habit,
-            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'combos', 'successDays', 'todayAchieved'],
-            include: [{
-              model: HabitAchieveDay,
-              attributes: ['id'],
-              include: [{ model: AchieveDay }]
-            }]
-          },
-          { model: Degree, attributes: ['name'] }
-        ]
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).end();
-    }
-  },
-
   checkToday: (req, res, next) => {
     const thisAllDate = res.locals.thisAllDate;
     AchieveDay.findOne({
@@ -108,7 +73,6 @@ module.exports = {
     })
     .then((findAchieveDay) => {
       if (findAchieveDay !== null) {
-        // console.log('SKIP MODE');
         req.skip = true;
       }
       next();
@@ -121,7 +85,6 @@ module.exports = {
 
   findEraseAchieveDays: async (req, res, next) => {
     if (req.skip === true) {
-      // console.log('findEraseAchieveDays are SKIP');
       return next();
     }
     const habits = res.locals.userData.Habits;
@@ -137,7 +100,7 @@ module.exports = {
       })
       .catch(error => {
         console.log('findEraseAchieveDays Error: ' + error);
-        res.status(500).end();
+        return res.status(500).end();
       })
     }
     res.locals.destroyHabitAchieveDays = destroyHabitAchieveDays;
@@ -146,7 +109,6 @@ module.exports = {
 
   eraseAchieveDays: async (req, res, next) => {
     if (req.skip === true) {
-      // console.log('eraseAchieveDays are SKIP');
       return next();
     }
     const habitAchieveDays = res.locals.destroyHabitAchieveDays;
@@ -162,7 +124,7 @@ module.exports = {
         })
         .catch(error => {
           console.log('eraseAchieveDays Error: ' + error);
-          res.status(500).end();
+          return res.status(500).end();
         })
       }
     }
@@ -171,7 +133,6 @@ module.exports = {
 
   eraseHabitAchieveDays: (req, res, next) => {
     if (req.skip === true) {
-      // console.log('eraseHabitAchieveDays are SKIP');
       return next();
     }
     const habitAchieveDays = res.locals.destroyHabitAchieveDays;
@@ -196,7 +157,6 @@ module.exports = {
 
   createAchieveDays: async (req, res, next) => {
     if (req.skip === true) {
-      // console.log('createAchieveDays are SKIP');
       return next();
     }
     const thisAllDate = res.locals.thisAllDate;
@@ -213,7 +173,6 @@ module.exports = {
           { year: thisAllDate[6].year, month: thisAllDate[6].month, day: thisAllDate[6].day, week: thisAllDate[6].week, achieved: false, createdAt: new Date(), updatedAt: new Date(), deletedAt: null }
         ])
         try {
-          console.log('createAchieveDays are OK');
           await AchieveDay.count({
             paranoid: false
           })
@@ -222,7 +181,6 @@ module.exports = {
               const newAchieveDaysId = new Array(7).fill(null).map((_, i) => {
                 return achieveDaysCount - 6 + i;
               });
-              console.log('countAchieveDays are OK');
               HabitAchieveDay.bulkCreate([
                 { habitId: habit.id, achieveDayId: newAchieveDaysId[0], createdAt: new Date(), updatedAt: new Date(), deletedAt: null },
                 { habitId: habit.id, achieveDayId: newAchieveDaysId[1], createdAt: new Date(), updatedAt: new Date(), deletedAt: null },
@@ -232,29 +190,26 @@ module.exports = {
                 { habitId: habit.id, achieveDayId: newAchieveDaysId[5], createdAt: new Date(), updatedAt: new Date(), deletedAt: null },
                 { habitId: habit.id, achieveDayId: newAchieveDaysId[6], createdAt: new Date(), updatedAt: new Date(), deletedAt: null }
               ])
-              console.log('createHabitAchieveDays are OK');
             } catch (error) {
               console.log('createHabitAchieveDays Error: ' + error);
-              res.status(500).end();
+              return res.status(500).end();
             }
           })
         } catch (error) {
           console.log('countAchieveDays Error: ' + error);
-          res.status(500).end();
+          return res.status(500).end();
         }
       } catch (error) {
         console.log('createAchieveDays Error: ' + error);
-        res.status(500).end();
+        return res.status(500).end();
       }
     }
     next();
   },
 
   getNewUserData: async (req, res, next) => {
-    const userData = res.locals.userData;
     if (req.skip === true) {
-      // console.log('getNewUserData is SKIP');
-      return res.status(200).json(userData);
+      return next();
     }
     try {
       const userNewData = await User.findOne({
@@ -265,7 +220,7 @@ module.exports = {
         include: [
           {
             model: Habit,
-            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'combos', 'successDays', 'todayAchieved'],
+            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'combos', 'successDays', 'todayAchieved', 'dayBeforeYesterdayAchieved'],
             include: [{
               model: HabitAchieveDay,
               attributes: ['id'],
@@ -275,9 +230,124 @@ module.exports = {
           { model: Degree, attributes: ['name'] }
         ]
       });
-      res.status(200).json(userNewData);
+      res.locals.userNewData = userNewData;
+      next();
     } catch (error) {
-      console.log(error);
+      console.log('userNewData error: ' + error);
+      res.status(500).end();
+    }
+  },
+
+  checkTodayAchieved: async (req, res, next) => {
+    const habits = [];
+    if (req.skip === true) {
+      const userHabits = res.locals.userData.Habits;
+      habits.push(userHabits);
+    } else {
+      const userNewHabits = res.locals.userNewData.Habits;
+      habits.push(userNewHabits);
+    }
+    const today = new Date(),
+          thisYear = today.getFullYear(),
+          thisMonth = today.getMonth() + 1,
+          day = today.getDate();
+    for (const habit of habits[0]) {
+      try {
+        await Habit.findOne({
+          where: {
+            id: habit.id
+          },
+          include: [{
+            model: HabitAchieveDay,
+            include: [{ 
+              model: AchieveDay,
+              where: {
+                year: thisYear,
+                month: thisMonth,
+                day: day
+              }
+            }]
+          }]
+        })
+        .then(h => {
+          if (h.HabitAchieveDays[0].AchieveDay.achieved === true) {
+            h.todayAchieved = true;
+            return h.save();
+          } else if (h.HabitAchieveDays[0].AchieveDay.achieved === false) {
+            h.todayAchieved = false;
+            return h.save();
+          } else {
+            console.log('no update todayAchieved');
+          }
+        })
+      } catch (error) {
+        console.log('checkTodayAchieved error: ' + error);
+        return res.status(500).end();
+      }
+    }
+    next();
+  },
+
+  // updateCombos: async (req, res, next) => {
+  //   const habits = [];
+  //   if (req.skip === true) {
+  //     const userHabits = res.locals.userData.Habits;
+  //     habits.push(userHabits);
+  //   } else {
+  //     const userNewHabits = res.locals.userNewData.Habits;
+  //     habits.push(userNewHabits);
+  //   }
+  //   const today = new Date(),
+  //         dayBeforeYesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2),
+  //         dbyYear = dayBeforeYesterday.getFullYear(),
+  //         dbyMonth = dayBeforeYesterday.getMonth() + 1,
+  //         dbyDay = dayBeforeYesterday.getDate();
+  //   for (const habit of habits[0]) {
+  //     try {
+  //       await Habit.findOne({
+  //         where: {
+  //           id: habit.id
+  //         },
+  //         include: [{
+  //           model: HabitAchieveDay,
+  //           include: [{ 
+  //             model: AchieveDay,
+  //             where: {
+  //               year: dbyYear,
+  //               month: dbyMonth,
+  //               day: dbyDay
+  //             }
+  //           }]
+  //         }]
+  //       })
+  //       .then(h => {
+  //         if (typeof h.HabitAchieveDays[0] === 'undefined') {
+  //           h.combos = h.combos - 1;
+  //           return h.save();
+  //         } else {
+  //           if (h.HabitAchieveDays[0].AchieveDay.achieved === false) {
+  //             h.combos = h.combos - 1;
+  //             return h.save();
+  //           } else {
+  //             console.log('no update combos');
+  //           }
+  //         }
+  //       })
+  //     } catch (error) {
+  //       console.log('updateCombos error: ' + error);
+  //       return res.status(500).end();
+  //     }
+  //   }
+  //   next();
+  // },
+
+  sendUserData: (req, res, next) => {
+    if (req.skip === true) {
+      const userData = res.locals.userData;
+      res.status(200).json(userData);
+    } else {
+      const userNewData = res.locals.userNewData;
+      res.status(200).json(userNewData);
     }
   },
 
@@ -290,9 +360,11 @@ module.exports = {
       tag2: req.body.createHabit.tag2,
       tag3: req.body.createHabit.tag3,
       ingenuity: req.body.createHabit.ingenuity,
-      combos: 0,
+      combos: 1,
       successDays: 0,
       iine: 0,
+      todayAchieved: false,
+      dayBeforeYesterdayAchieved: false,
       createdAt: new Date(),
       updatedAt: new Date()
     })
@@ -350,15 +422,5 @@ module.exports = {
     .catch(error => {
       console.log(error);
     })
-  },
-
-  // getToday: (req, res, next) => {
-  //   const today = new Date();
-  //   const todayObject = {
-  //     year: today.getFullYear(),
-  //     month: today.getMonth() + 1,
-  //     day: today.getDate()
-  //   }
-  //   res.status(200).json(todayObject);
-  // }
+  }
 }

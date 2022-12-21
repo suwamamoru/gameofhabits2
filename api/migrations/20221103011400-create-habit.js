@@ -49,6 +49,9 @@ module.exports = {
       todayAchieved: {
         type: Sequelize.BOOLEAN
       },
+      dayBeforeYesterdayAchieved: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -14,7 +14,12 @@ router.post(
   usersController.eraseAchieveDays,
   usersController.eraseHabitAchieveDays,
   usersController.createAchieveDays,
-  usersController.getNewUserData
+  usersController.getNewUserData,
+  usersController.checkTodayAchieved,
+  // usersController.getNewUserData,
+  // usersController.updateCombos,
+  usersController.getNewUserData,
+  usersController.sendUserData
 );
 
 router.post(
@@ -27,7 +32,5 @@ router.post(
 router.post('/editHabit', usersController.editHabit);
 router.post('/updateHabit', usersController.updateHabit);
 router.post('/eraseHabit', usersController.eraseHabit);
-
-// router.get('/getToday', usersController.getToday);
 
 module.exports = router;

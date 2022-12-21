@@ -13,7 +13,7 @@ module.exports = {
     try {
       const user = await User.findOne({ where: { name: req.body.username } });
       if (user) {
-        const password = await bcrypt.compare(req.body.password, user.password)
+        const password = await bcrypt.compare(req.body.password, user.password);
         if (password) {
           next();
         } else res.status(403).json('パスワードに誤りがあります。');

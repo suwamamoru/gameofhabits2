@@ -40,7 +40,7 @@
           <div class="status">
             <p id="ingenuity">工夫：{{ habit.ingenuity }}</p>
             <div class="combos-and-success">
-              <p id="combos">コンボ倍数：{{ habit.combos }}倍</p>
+              <!-- <p id="combos">コンボ倍数：{{ habit.combos }}倍</p> -->
               <p id="success">累計{{ habit.successDays }}日成功</p>
             </div>
           </div>
@@ -48,6 +48,7 @@
             <form class="gacha-form" @submit.prevent="gacha(habit)">
               <input
                 type="submit" id="gacha" value="目標達成！"
+                :disabled="(habit.todayAchieved === true)"
                 :style="(habit.todayAchieved === true) ? 'background-color:#D9D9D9'
                 :'background-color:#FF0000'">
             </form>
@@ -115,29 +116,6 @@
           params: {
             id: habit.id
           }
-        });
-        this.userData.Habits.forEach(habit => {
-          habit.HabitAchieveDays.forEach(achieveDay => {
-            this.week.push({
-              year: achieveDay.AchieveDay.year,
-              month: achieveDay.AchieveDay.month,
-              day: achieveDay.AchieveDay.day,
-              achieved: achieveDay.AchieveDay.achieved
-            })
-          })
-        })
-        this.week.forEach(date => {
-          if (
-            date.year === this.getToday.year &&
-            date.month === this.getToday.month &&
-            date.day === this.getToday.day &&
-            date.achieved === true
-          ) {
-            this.achieved.push(true);
-          }
-        })
-        this.userData.Habits.forEach((habit, i) => {
-          habit.todayAchieved = this.achieved[i];
         });
       }
     }
