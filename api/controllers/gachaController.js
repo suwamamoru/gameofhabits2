@@ -102,42 +102,57 @@ module.exports = {
     });
   },
 
+  getToday: (req, res, next) => {
+    const today = new Date();
+    res.locals.thisYear = today.getFullYear();
+    res.locals.thisMonth = today.getMonth() + 1;
+    res.locals.day = today.getDate();
+    next();
+  },
+
   updateAchieveDay: async (req, res, next) => {
-    const today = new Date(),
-          thisYear = today.getFullYear(),
-          thisMonth = today.getMonth() + 1,
-          day = today.getDate();
-    await Habit.findOne({
-      where: {
-        id: req.body.habitId
-      },
-      include: [{
-        model: HabitAchieveDay,
-        include: [{ 
-          model: AchieveDay,
-          where: {
-            year: thisYear,
-            month: thisMonth,
-            day: day
-          }
+    const habitId = req.body.habitId,
+          thisYear = res.locals.thisYear,
+          thisMonth = res.locals.thisMonth,
+          day = res.locals.day;
+    try {
+      await Habit.findOne({
+        where: {
+          id: habitId
+        },
+        include: [{
+          model: HabitAchieveDay,
+          include: [{ 
+            model: AchieveDay,
+            where: {
+              year: thisYear,
+              month: thisMonth,
+              day: day
+            }
+          }]
         }]
-      }]
-    })
-    .then(h => {
-      console.log('h: ' + JSON.stringify(h));
-      console.log('h.HabitAchieveDays: ' + JSON.stringify(h.HabitAchieveDays));
-      console.log('h.HabitAchieveDays[0]: ' + JSON.stringify(h.HabitAchieveDays[0]));
-      console.log('h.HabitAchieveDays[0].AchieveDay: ' + JSON.stringify(h.HabitAchieveDays[0].AchieveDay));
-      console.log('h.HabitAchieveDays[0].AchieveDay.achieved: ' + JSON.stringify(h.HabitAchieveDays[0].AchieveDay.achieved));
-      h.HabitAchieveDays[0].AchieveDay.achieved = true;
-      console.log('h.HabitAchieveDays[0].AchieveDay.achieved2: ' + JSON.stringify(h.HabitAchieveDays[0].AchieveDay.achieved));
-      h.save();
-      next();
-    })
-    .catch(error => {
-      console.log('updateAchieveDay error: ' + error);
+      })
+      .then(habit => {
+        const achieveDayId = habit.HabitAchieveDays[0].AchieveDay.id;
+          AchieveDay.findOne({
+            where: {
+              id: achieveDayId
+            }
+          })
+          .then((achieveDay) => {
+            achieveDay.achieved = true;
+            achieveDay.save();
+            next();
+          })
+          .catch(error => {
+            console.log('updateAchieveDay error in updateHabit: ' + error);
+            res.status(500).end();
+          })
+        })
+    } catch (error) {
+      console.log('readingHabit error: ' + error);
       res.status(500).end();
-    })
+    }
   },
 
   getHabitAchieveDays: async (req, res, next) => {
@@ -208,64 +223,11 @@ module.exports = {
       .then(habit => {
         habit.successDays = successDays;
         habit.save();
-        next();
+        res.status(200).end();
       })
     } catch (error) {
       console.log('updateSuccessDays error: ' + error);
       res.status(500).end();
     }
   },
-
-  getToday: (req, res, next) => {
-    const today = new Date();
-    res.locals.thisYear = today.getFullYear();
-    res.locals.thisMonth = today.getMonth() + 1;
-    res.locals.day = today.getDate();
-    next();
-  },
-
-  updateHabit: async (req, res, next) => {
-    const habitId = req.body.habitId,
-          thisYear = res.locals.thisYear,
-          thisMonth = res.locals.thisMonth,
-          day = res.locals.day;
-    try {
-      await Habit.findOne({
-        where: {
-          id: habitId
-        },
-        include: [{
-          model: HabitAchieveDay,
-          include: [{ 
-            model: AchieveDay,
-            where: {
-              year: thisYear,
-              month: thisMonth,
-              day: day
-            }
-          }]
-        }]
-      })
-      .then(habit => {
-        const achieveDayId = habit.HabitAchieveDays[0].AchieveDay.id;
-          AchieveDay.findOne({
-            where: {
-              id: achieveDayId
-            }
-          })
-          .then((achieveDay) => {
-            achieveDay.achieved = true;
-            achieveDay.save();
-            res.status(200).end();
-          })
-          .catch(error => {
-            console.log('updateAchieveDay error in updateHabit: ' + error);
-            res.status(500).end();
-          })
-        })
-    } catch (error) {
-      console.log('updateHabit error: ' + error);
-      res.status(500).end();
-    }
-  }
 }

@@ -110,6 +110,7 @@
         });
       },
       gacha (habit) {
+        this.$store.dispatch('getGachaGuard', true);
         this.$router.push({
           path: '/gacha',
           name: 'gacha',

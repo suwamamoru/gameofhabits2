@@ -11,12 +11,11 @@ router.post(
   gachaController.updateSP,
   gachaController.getDegree,
   gachaController.updateDegree,
+  gachaController.getToday,
   gachaController.updateAchieveDay,
   gachaController.getHabitAchieveDays,
   gachaController.countSuccessDays,
   gachaController.updateSuccessDays,
-  gachaController.getToday,
-  gachaController.updateHabit
 );
 
 module.exports = router;
