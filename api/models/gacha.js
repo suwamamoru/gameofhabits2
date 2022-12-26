@@ -15,14 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Gacha.init({
     imageName: DataTypes.STRING,
-    imageType: DataTypes.STRING,
     imageContent: DataTypes.STRING,
-    imageSize: DataTypes.STRING,
     sp: DataTypes.INTEGER,
     probability: DataTypes.FLOAT
   }, {
     sequelize,
-    modelName: 'Gacha',
+    modelName: 'Gacha'
   });
   return Gacha;
 };

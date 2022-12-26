@@ -26,12 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     password: DataTypes.STRING,
     sp: DataTypes.INTEGER,
-    degreeId: DataTypes.INTEGER,
-    inquiry_title: DataTypes.STRING,
-    inquiry_content: DataTypes.STRING
+    degreeId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'User'
   });
   return User;
 };

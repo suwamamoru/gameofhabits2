@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       });
-      Habit.belongsToMany(models.AchieveDay, {
-        through: models.HabitAchieveDay,
-        foreignKey: 'achieveDayId'
+      Habit.belongsToMany(models.Achievement, {
+        through: models.HabitAchievement,
+        foreignKey: 'achievementId'
       });
-      Habit.hasMany(models.HabitAchieveDay, {
+      Habit.hasMany(models.HabitAchievement, {
         foreignKey: 'habitId',
         onUpdate: 'cascade',
         onDelete: 'cascade'
@@ -29,20 +29,16 @@ module.exports = (sequelize, DataTypes) => {
   Habit.init({
     userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
-    attribute: DataTypes.STRING,
     tag1: DataTypes.STRING,
     tag2: DataTypes.STRING,
     tag3: DataTypes.STRING,
     ingenuity: DataTypes.STRING,
-    combos: DataTypes.INTEGER,
     successDays: DataTypes.INTEGER,
-    iine: DataTypes.INTEGER,
     todayAchieved: DataTypes.BOOLEAN,
-    dayBeforeYesterdayAchieved: DataTypes.BOOLEAN
   }, {
     sequelize,
     paranoid: true,
-    modelName: 'Habit',
+    modelName: 'Habit'
   });
   return Habit;
 };

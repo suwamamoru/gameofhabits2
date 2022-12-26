@@ -40,9 +40,6 @@
         toggled: false
       }
     },
-    beforeCreate() {
-      this.gachaGuard();
-    },
     created: async function () {
       try {
         const userData = await this.$axios.$post('/users/getUserData', {
@@ -63,10 +60,6 @@
       }
     },
     methods: {
-      gachaGuard() {
-        // if (this.$store.getters.gachaGuard === false)
-        this.$store.dispatch('gachaGuardListener');
-      },
       toggle: async function () {
         this.toggled = !this.toggled;
         try {

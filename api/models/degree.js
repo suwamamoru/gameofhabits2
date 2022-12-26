@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     sp_required: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Degree',
+    modelName: 'Degree'
   });
   return Degree;
 };

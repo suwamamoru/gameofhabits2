@@ -7,19 +7,12 @@ const express = require('express'),
 
 router.post(
   '/getUserData',
+  usersController.checkThisYear,
+  usersController.eraseOldYear,
+  usersController.createNewYear,
   usersController.getUserData,
-  usersController.thisWeek,
-  usersController.checkToday,
-  usersController.findEraseAchieveDays,
-  usersController.eraseAchieveDays,
-  usersController.eraseHabitAchieveDays,
-  usersController.createAchieveDays,
-  usersController.getNewUserData,
   usersController.checkTodayAchieved,
-  // usersController.getNewUserData,
-  // usersController.updateCombos,
-  usersController.getNewUserData,
-  usersController.sendUserData
+  usersController.getUserData
 );
 
 router.post(
