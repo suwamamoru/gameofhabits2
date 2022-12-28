@@ -2,25 +2,18 @@
 
 const express = require('express'),
       router = express.Router(),
-      authController = require('../controllers/authController'),
       usersController = require('../controllers/usersController');
 
-router.post(
-  '/getUserData',
-  usersController.checkThisYear,
-  usersController.eraseOldYear,
-  usersController.createNewYear,
-  usersController.getUserData,
-  usersController.checkTodayAchieved,
-  usersController.getUserData
-);
+router.get('/checkThisYear', usersController.checkThisYear);
+router.post('/getUserData',usersController.getUserData);
+router.get('/getThisWeek', usersController.getThisWeek);
+router.post('/changeDayColor', usersController.changeDayColor);
+router.post('/checkTodayAchieved', usersController.checkTodayAchieved);
 
 router.post(
-  '/createNewHabit', 
+  '/createNewHabit',
   usersController.createNewHabit,
-  authController.createAchieveDays,
-  authController.countAchieveDays,
-  authController.createHabitAchieveDays
+  usersController.createNewHabitAchievement
 );
 router.post('/editHabit', usersController.editHabit);
 router.post('/updateHabit', usersController.updateHabit);

@@ -18,11 +18,7 @@ router.post(
   authController.checkSameUser,
   authController.createUser,
   authController.getUserId,
-  authController.createHabit,
-  authController.getHabitId,
-  authController.createAchieveDays,
-  authController.countAchieveDays,
-  authController.createHabitAchieveDays
+  authController.createHabit
 );
 
 module.exports = router;

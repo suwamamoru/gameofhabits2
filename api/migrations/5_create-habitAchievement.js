@@ -22,7 +22,7 @@ module.exports = {
       achievementId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Achievements',
+          model: 'AchievementDates',
           key: 'id',
           as: 'achievementId'
         },

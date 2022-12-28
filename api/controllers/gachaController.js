@@ -3,8 +3,8 @@
 const User = require('../models').User,
       Habit = require('../models').Habit,
       Degree = require('../models').Degree,
-      HabitAchieveDay = require('../models').HabitAchieveDay,
-      AchieveDay = require('../models').AchieveDay,
+      HabitAchievement = require('../models').HabitAchievement,
+      AchievementDate = require('../models').AchievementDate,
       Gacha = require('../models').Gacha,
       Sequelize = require('sequelize'),
       Op = Sequelize.Op;
@@ -39,21 +39,6 @@ module.exports = {
     });
   },
 
-  // updateCombos: (req, res, next) => {
-  //   const habitId = req.body.habitId;
-  //   Habit.findByPk(habitId)
-  //   .then(habit => {
-  //     res.locals.combos = habit.combos;
-  //     habit.combos = habit.combos + 1;
-  //     habit.save();
-  //     next();
-  //   })
-  //   .catch(error => {
-  //     console.log('updateCombos error: ' + error);
-  //     res.status(500).end();
-  //   })
-  // },
-
   updateSP: (req, res, next) => {
     const userId = req.body.userId;
     User.findByPk(userId)
@@ -69,165 +54,92 @@ module.exports = {
     })
   },
 
-  getDegree: (req, res, next) => {
-    console.log(res.locals.userSP);
-    Degree.max('id', {
-      where: {
-        sp_required: {
-          [Op.lte]: res.locals.userSP
-        }
-      }
-    })
-    .then(degreeId => {
-      res.locals.degreeId = degreeId;
-      next();
-    })
-    .catch(error => {
-      console.log('getDegree error: ' + error);
-      res.status(500).end();
-    });
-  },
-
-  updateDegree: (req, res, next) => {
+  updateDegree: async(req, res, next) => {
     const userId = req.body.userId;
-    User.findByPk(userId)
-    .then(user => {
-      user.degreeId = res.locals.degreeId;
-      user.save();
-      next();
-    })
-    .catch(error => {
-      console.log('updateDegree error: ' + error);
-      res.status(500).end();
-    });
-  },
-
-  getToday: (req, res, next) => {
-    const today = new Date();
-    res.locals.thisYear = today.getFullYear();
-    res.locals.thisMonth = today.getMonth() + 1;
-    res.locals.day = today.getDate();
-    next();
-  },
-
-  updateAchieveDay: async (req, res, next) => {
-    const habitId = req.body.habitId,
-          thisYear = res.locals.thisYear,
-          thisMonth = res.locals.thisMonth,
-          day = res.locals.day;
     try {
-      await Habit.findOne({
+      await Degree.max('id', {
         where: {
-          id: habitId
-        },
-        include: [{
-          model: HabitAchieveDay,
-          include: [{ 
-            model: AchieveDay,
-            where: {
-              year: thisYear,
-              month: thisMonth,
-              day: day
-            }
-          }]
-        }]
+          sp_required: {
+            [Op.lte]: res.locals.userSP
+          }
+        }
       })
-      .then(habit => {
-        const achieveDayId = habit.HabitAchieveDays[0].AchieveDay.id;
-          AchieveDay.findOne({
-            where: {
-              id: achieveDayId
-            }
-          })
-          .then((achieveDay) => {
-            achieveDay.achieved = true;
-            achieveDay.save();
-            next();
-          })
-          .catch(error => {
-            console.log('updateAchieveDay error in updateHabit: ' + error);
-            res.status(500).end();
-          })
+      .then(degreeId => {
+        User.findByPk(userId)
+        .then(user => {
+          user.degreeId = degreeId;
+          user.save();
+          next();
         })
+        .catch(error => {
+          console.log('update Degree error in updateDegree: ' + error);
+          res.status(500).end();
+        });
+      })
     } catch (error) {
-      console.log('readingHabit error: ' + error);
+      console.log('degree max error in updateDegree: ' + error);
       res.status(500).end();
     }
   },
 
-  getHabitAchieveDays: async (req, res, next) => {
-    const habitId = req.body.habitId;
-    const getHabitAchieveDays = [];
+  createNewAchievement: async (req, res, next) => {
+    const today = new Date(),
+          thisYear = today.getFullYear(),
+          thisMonth = today.getMonth() + 1,
+          day = today.getDate(),
+          habitId = req.body.habitId;
     try {
-      await HabitAchieveDay.findAll({
-        paranoid: false,
+      await AchievementDate.findOne({
         where: {
-          habitId: habitId
-        },
-        include: [{ model: AchieveDay }]
+          year: thisYear,
+          month: thisMonth,
+          day: day
+        }
       })
-      .then(habitAchieveDay => {
-        getHabitAchieveDays.push(habitAchieveDay);
+      .then(achievementDate => {
+        HabitAchievement.create({
+          habitId: habitId,
+          achievementId: achievementDate.id
+        })
+        .then(() => {
+          next();
+        })
+        .catch(error => {
+          console.log('create HabitAchievement error in createNewAchievement: ' + error);
+          res.status(500).end();
+        })
       })
     } catch (error) {
-      console.log('getHabitAchieveDays error: ' + error);
+      console.log('reading Calendar error: ' + error);
       res.status(500).end();
     }
-    res.locals.getHabitAchieveDays = getHabitAchieveDays[0];
-    next();
   },
 
   countSuccessDays: async (req, res, next) => {
-    const getHabitAchieveDays = res.locals.getHabitAchieveDays,
-          achieveDayIds = [],
-          achieveDays = [];
-    getHabitAchieveDays.forEach(habitAchieveDay => {
-      achieveDayIds.push(habitAchieveDay.achieveDayId);
-    });
-    console.log('getHabitAchieveDays: ' + JSON.stringify(getHabitAchieveDays));
-    console.log('achieveDays: ' + JSON.stringify(achieveDayIds));
-    for (const achieveDayId of achieveDayIds) {
-      try {
-        await AchieveDay.findOne({
-          paranoid: false,
-          where: {
-            id: achieveDayId
-          }
-        })
-        .then(achieveDay => {
-          if (achieveDay.achieved === true) {
-            achieveDays.push(achieveDay);
-          }
-        })
-      } catch (error) {
-        console.log('getAchieveDays error: ' + error);
-        res.status(500).end();
-      }
-    }
-    console.log('achieveDays: ' + JSON.stringify(achieveDays));
-    console.log('successDays: ' + achieveDays.length);
-    res.locals.successDays = achieveDays.length;
-    next();
-  },
-
-  updateSuccessDays: async (req, res, next) => {
-    const habitId = req.body.habitId;
-    const successDays = res.locals.successDays;
     try {
-      await Habit.findOne({
-        paranoid: false,
+      const countSuccessDays = await HabitAchievement.count({
         where: {
-          id: habitId
+          habitId: req.body.habitId
         }
       })
-      .then(habit => {
-        habit.successDays = successDays;
-        habit.save();
-        res.status(200).end();
-      })
+      try {
+        await Habit.findOne({
+          where: {
+            id: req.body.habitId
+          }
+        })
+        .then(habit => {
+          habit.successDays = countSuccessDays - 1;  // 初期設定でnull calendarを読んでいるため、-1する。
+          habit.save();
+          res.status(200).end();
+        })
+      } catch (error) {
+        console.log('Habit.findOne error in countSuccessDays: ' + error);
+        res.status(500).end();
+      }
     } catch (error) {
-      console.log('updateSuccessDays error: ' + error);
+      console.log('HabitAchievement.count error in countSuccessDays: ' + error);
       res.status(500).end();
     }
-  },
+  }
 }

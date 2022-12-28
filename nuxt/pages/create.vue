@@ -34,6 +34,7 @@
       <form class="create-form" @submit.prevent="create(habit)">
         <input type="submit" id="create" value="作成する">
       </form>
+      {{ habit.userId }}
     </div>
   </div>
 </template>
@@ -60,9 +61,7 @@
           tag2: '',
           tag3: '',
           ingenuity: '',
-          combos: 0,
-          successDays: 0,
-          iine: 0
+          successDays: 0
         }
       }
     },

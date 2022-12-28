@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       });
-      Habit.belongsToMany(models.Achievement, {
+      Habit.belongsToMany(models.AchievementDate, {
         through: models.HabitAchievement,
         foreignKey: 'achievementId'
       });
@@ -33,8 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     tag2: DataTypes.STRING,
     tag3: DataTypes.STRING,
     ingenuity: DataTypes.STRING,
-    successDays: DataTypes.INTEGER,
-    todayAchieved: DataTypes.BOOLEAN,
+    successDays: DataTypes.INTEGER
   }, {
     sequelize,
     paranoid: true,

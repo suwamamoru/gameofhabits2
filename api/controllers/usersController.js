@@ -4,70 +4,47 @@ const User = require('../models').User,
       Habit = require('../models').Habit,
       Degree = require('../models').Degree,
       HabitAchievement = require('../models').HabitAchievement,
-      Achievement = require('../models').Achievement,
-      Calendar = require('../models').Calendar;
+      AchievementDate = require('../models').AchievementDate;
 
 module.exports = {
   checkThisYear: (req, res, next) => {
     const thisYear = new Date().getFullYear();
-    Calendar.findOne({
+    AchievementDate.findOne({
       where: {
         year: thisYear
       }
     })
-    .then(calendar => {
-      if (calendar !== null) {
-        req.createNewYearSkip = true;
+    .then(achievementDate => {
+      if (achievementDate === null) {
+        const week = ["日", "月", "火", "水", "木", "金", "土"];
+        const today = new Date();
+        const thisYear = today.getFullYear();
+        const date = new Date(thisYear, 0, 1);
+        const k = [];
+        if (thisYear % 4 === 0) {
+          k.push(366); 
+        } else {
+          k.push(365);
+        }
+        for (let i = 1; i <= k[0]; i++) {
+          AchievementDate.create({
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate(),
+            week: week[date.getDay()],
+            createdAt: new Date().toString(),
+            updatedAt: new Date().toString(),
+            deletedAt: null
+          });
+          date.setDate(date.getDate() + 1);
+        }
       }
-      console.log('checkThisYearまで');
-      next();
+      res.status(200).end();
     })
     .catch(error => {
       console.log('Error in checkThisYear' + error);
       res.status(500).end();
     })
-  },
-
-  eraseOldYear: (req, res, next) => {
-    if (req.createNewYearSkip === true) return next();
-    Calendar.findAll()
-    .then(calendar => {
-      calendar.destroy();
-      console.log('eraseOldYearまで');
-      next();
-    })
-    .catch(error => {
-      console.log('Error in eraseOldYear' + error);
-      res.status(500).end();
-    })
-  },
-
-  createNewYear: (req, res, next) => {
-    if (req.createNewYearSkip === true) return next();
-    const week = ["日", "月", "火", "水", "木", "金", "土"];
-    const today = new Date();
-    const thisYear = today.getFullYear();
-    const date = new Date(thisYear, 0, 1);
-    const k = [];
-    if (thisYear % 4 === 0) {
-      k.push(366); 
-    } else {
-      k.push(365);
-    }
-    for (let i = 1; i <= k[0]; i++) {
-      Calendar.create({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-        week: week[date.getDay()],
-        createdAt: new Date().toString(),
-        updatedAt: new Date().toString(),
-        deletedAt: null
-      });
-      date.setDate(date.getDate() + 1);
-    }
-    console.log('createNewYearまで');
-    next();
   },
 
   getUserData: async (req, res, next) => {
@@ -76,96 +53,118 @@ module.exports = {
         where: {
           name: req.body.name
         },
-        attributes: ['name', 'sp', 'degreeId'],
+        attributes: ['id', 'name', 'sp', 'degreeId'],
         include: [
           {
             model: Habit,
-            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'successDays', 'todayAchieved'],
+            attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'successDays'],
             include: [{
               model: HabitAchievement,
               attributes: ['id'],
               include: [{
-                model: Achievement,
-                attributes: ['id'],
-                include: [{
-                  model: Calendar,
-                  attributes: ['year', 'month', 'day', 'week']
-                }]
+                model: AchievementDate,
+                attributes: ['year', 'month', 'day', 'week']
               }]
             }]
           },
           { model: Degree, attributes: ['name'] }
         ]
       });
-      if (req.getUserDataAgain === true) {
-        return res.status(200).json(userData);
-      }
-      res.locals.userData = userData;
-      console.log('userDataまで');
-      next();
+      res.status(200).json(userData);
     } catch (error) {
       console.log('getUserData error: ' + error);
       res.status(500).end();
     }
   },
 
-  checkTodayAchieved: async (req, res, next) => {
-    const habits = res.locals.userData.Habits;
-    console.log('habits in checkTodayAchieved: ' + JSON.stringify(habits));
+  getThisWeek: (req, res, next) => {
     const today = new Date(),
           thisYear = today.getFullYear(),
-          thisMonth = today.getMonth() + 1,
-          day = today.getDate();
-    // console.log('thisYear in checkTodayAchieved: ' + JSON.stringify(thisYear));
-    // console.log('thisMonth in checkTodayAchieved: ' + JSON.stringify(thisMonth));
-    // console.log('day in checkTodayAchieved: ' + JSON.stringify(day));
-    for (const habit of habits) {
-      console.log('habit in checkTodayAchieved: ' + JSON.stringify(habit));
-      try {
-        await Habit.findOne({
-          where: {
-            id: habit.id
-          },
-          attributes: ['id', 'title', 'tag1', 'tag2', 'tag3', 'ingenuity', 'successDays', 'todayAchieved'],
-          include: [{
-            model: HabitAchievement,
-            attributes: ['id'],
-            include: [{ 
-              model: Achievement,
-              attributes: ['id'],
-              include: [{
-                model: Calendar,
-                where: {
-                  year: thisYear,
-                  month: thisMonth,
-                  day: day
-                }
-              }]
-            }]
-          }]
-        })
-        .then(h => {
-          console.log('h in checkTodayAchieved: ' + JSON.stringify(h));
-          console.log('h.HabitAchievements in checkTodayAchieved: ' + JSON.stringify(h.HabitAchievements));
-          console.log('h.HabitAchievements[0] in checkTodayAchieved: ' + JSON.stringify(h.HabitAchievements[0]));
-          console.log('h.HabitAchievements[0].Achievement in checkTodayAchieved: ' + JSON.stringify(h.HabitAchievements.Achievement));
-          if (h.HabitAchievements[0].Achievement !== null) {
-            h.todayAchieved = true;
-            return h.save();
-          } else if (h.HabitAchievements[0].Achievement === null) {
-            h.todayAchieved = false;
-            return h.save();
-          } else {
-            console.log('no update todayAchieved');
+          thisMonth = today.getMonth(),
+          date = today.getDate(),  // 今日の日にちを返す。
+          weekNum = today.getDay(),  // 曜日を数字で返す。0（日曜日）～6（土曜日）
+          week = new String('日月火水木金土'),
+          weekLength = 7,
+          thisWeek = new Array(weekLength).fill(null).map((_, i) => {
+            return date - weekNum + 1 + i  // 今週i曜日の日にちを返す。
+          }),
+          thisDateWeek = new Array(weekLength).fill(null).map((_, i) => {
+            return new Date(thisYear, thisMonth, thisWeek[i])
+          }),
+          thisAllDate = new Array(weekLength).fill(null).map((_, i) => {
+            return {
+              id: i,
+              year: thisDateWeek[i].getFullYear(),
+              month: (thisDateWeek[i].getMonth() + 1),
+              day: thisDateWeek[i].getDate(),
+              week: week.charAt(thisDateWeek[i].getDay())
+            }
+          });
+    res.status(200).json(thisAllDate);
+  },
+
+  changeDayColor: (req, res, next) => {
+    const userData = req.body.userData,
+          thisWeek = req.body.thisWeek,
+          dayColor = [];
+    userData.Habits.forEach((habit, i) => {
+      dayColor.push([]);
+      const achieveDay = {};
+      thisWeek.forEach((week, j) => {
+        habit.HabitAchievements.forEach((habitAchievement) => {
+          if (
+            habitAchievement.AchievementDate.year === week.year &&
+            habitAchievement.AchievementDate.month === week.month &&
+            habitAchievement.AchievementDate.day === week.day
+          ) {
+            console.log(true);
+            achieveDay['year'] = week.year
+            achieveDay['month'] = week.month
+            achieveDay['day'] = week.day
           }
-        })
-      } catch (error) {
-        console.log('checkTodayAchieved error: ' + error);
-        return res.status(500).end();
+          console.log(false);
+        });
+        if (
+          achieveDay.year === week.year &&
+          achieveDay.month === week.month &&
+          achieveDay.day === week.day
+        ) {
+          dayColor[i][j] = true;
+        } else {
+          dayColor[i][j] = false;
+        }
+      })
+    })
+    res.status(200).json(dayColor);
+  },
+
+  checkTodayAchieved: async (req, res, next) => {
+    const habits = req.body.userData.Habits,
+          today = new Date(),
+          thisYear = today.getFullYear(),
+          thisMonth = today.getMonth() + 1,
+          day = today.getDate(),
+          checkTodayAchieved = [];
+    for (const habit of habits) {
+      const todayAchieved = [];
+      for (const habitAchievement of habit.HabitAchievements) {
+        if (
+          habitAchievement.AchievementDate.year === thisYear &&
+          habitAchievement.AchievementDate.month === thisMonth &&
+          habitAchievement.AchievementDate.day === day
+        ) {
+          todayAchieved.push(true); 
+        } else {
+          todayAchieved.push(false);
+        }
+      }
+      if (todayAchieved.includes(true)) {
+        checkTodayAchieved.push(true);
+      } else {
+        checkTodayAchieved.push(false);
       }
     }
-    req.getUserDataAgain = true;
-    next();
+    res.status(200).json(checkTodayAchieved);
   },
 
   createNewHabit: (req, res, next) => {
@@ -177,18 +176,31 @@ module.exports = {
       tag3: req.body.createHabit.tag3,
       ingenuity: req.body.createHabit.ingenuity,
       successDays: 0,
-      todayAchieved: false,
       createdAt: new Date(),
       updatedAt: new Date()
     })
     .then(habit => {
-      console.log('createNewHabit');
       res.locals.habitId = habit.id;
-      res.locals.userId = req.body.createHabit.userId;
       next();
     })
     .catch((error) => {
       console.log('New Habit Creation Error in createNewHabit: ' + error);
+      res.status(500).end();
+    });
+  },
+
+  createNewHabitAchievement: (req, res, next) => {
+    HabitAchievement.create({
+      habitId: res.locals.habitId,
+      achievementId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch((error) => {
+      console.log('New HabitAchievement Creation Error in createNewHabitAchievement: ' + error);
       res.status(500).end();
     });
   },
@@ -211,7 +223,6 @@ module.exports = {
     Habit.findByPk(newHabitId)
     .then(habit => {
       habit.title = req.body.newHabit.title,
-      habit.attribute = req.body.newHabit.attribute,
       habit.tag1 = req.body.newHabit.tag1,
       habit.tag2 = req.body.newHabit.tag2,
       habit.tag3 = req.body.newHabit.tag3,
@@ -224,16 +235,26 @@ module.exports = {
     });
   },
 
-  eraseHabit: (req, res, next) => {
+  eraseHabit: async (req, res, next) => {
     const eraseHabitId = req.body.eraseHabit.id;
-    Habit.destroy({
-      where: { id: eraseHabitId }
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    try {
+      await Habit.destroy({
+        paranoid: false,
+        where: { id: eraseHabitId }
+      })
+    } catch (error) {
+      console.log('Habit.destroy error: ' + error);
+      res.status(500).end();
+    }
+    try {
+      await HabitAchievement.destroy({
+        paranoid: false,
+        where: { habitId: eraseHabitId }
+      })
+    } catch (error) {
+      console.log('HabitAchievement.destroy error: ' + error);
+      res.status(500).end();
+    }
+    res.status(200).end();
   }
 }

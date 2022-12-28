@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       });
-      HabitAchievement.belongsTo(models.Achievement, {
+      HabitAchievement.belongsTo(models.AchievementDate, {
         foreignKey: 'achievementId',
         onUpdate: 'cascade',
         onDelete: 'cascade'

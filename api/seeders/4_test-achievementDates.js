@@ -5,8 +5,17 @@ const db = require('../models');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
-      'Calendars',
+      'AchievementDates',
       [
+        {
+          year: null,
+          month: null,
+          day: null,
+          week: '',
+          createdAt: 'Mon Dec 26 2022 13:17:06 GMT+0900 (Japan Standard Time)',
+          updatedAt: 'Mon Dec 26 2022 13:17:06 GMT+0900 (Japan Standard Time)',
+          deletedAt: null
+        },
         {
           year: 2022,
           month: 1,
@@ -3298,6 +3307,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Calendars', null, {});
+    return queryInterface.bulkDelete('AchievementDates', null, {});
   }
 };

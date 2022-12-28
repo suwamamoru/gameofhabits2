@@ -9,7 +9,7 @@
         :userData="userData" />
     </header>
     <div class="contents">
-      <div class="content" v-for="habit in userData.Habits" :key="habit">
+      <div class="content" v-for="(habit, index) in Habits" :key="habit">
         <table class="habits-header">
           <tr>
             <h2 class="title">{{ habit.title }}</h2>
@@ -23,24 +23,24 @@
         </table>
         <div class="habits-contents">
           <div class="date">
-            <div v-for="achieveDay in habit.HabitAchieveDays" :key="achieveDay">  <!-- 今週1週間のカレンダーを生成する -->
+            <div v-for="week in thisWeek" :key="week">  <!-- 今週1週間のカレンダーを生成する -->
               <p class="day"
-                :style="(achieveDay.AchieveDay.achieved === true)
-                ? 'background-color:#55ACEE':'background-color:#D9D9D9'">  <!-- 達成日を青色にする。それ以外は非表示 -->
-                {{ achieveDay.AchieveDay.month }}/{{ achieveDay.AchieveDay.day }}
+                v-if="changeDayColor[index]"
+                :style="(changeDayColor[index][week.id] === true) ? 'background-color:#55ACEE'
+                :'background-color:#D9D9D9'">
+                {{ week.month }}/{{ week.day }} <!-- 達成日を青色にする。 -->
                 <span
-                  :style="(achieveDay.AchieveDay.week === '土') ? 'color:#005DB9'
-                  :(achieveDay.AchieveDay.week === '日') ? 'color:#FF0000'
+                  :style="(week.week === '土') ? 'color:#005DB9'
+                  :(week.week === '日') ? 'color:#FF0000'
                   :'color:#000000'">  <!-- 土日の色をそれぞれ青赤にする。それ以外は黒 -->
-                  ({{ achieveDay.AchieveDay.week }})
+                  ({{ week.week }})
                 </span>
               </p>
             </div>
           </div>
           <div class="status">
             <p id="ingenuity">工夫：{{ habit.ingenuity }}</p>
-            <div class="combos-and-success">
-              <!-- <p id="combos">コンボ倍数：{{ habit.combos }}倍</p> -->
+            <div class="success">
               <p id="success">累計{{ habit.successDays }}日成功</p>
             </div>
           </div>
@@ -48,8 +48,8 @@
             <form class="gacha-form" @submit.prevent="gacha(habit)">
               <input
                 type="submit" id="gacha" value="目標達成！"
-                :disabled="(habit.todayAchieved === true)"
-                :style="(habit.todayAchieved === true) ? 'background-color:#D9D9D9'
+                :disabled="(checkTodayAchieved[index] === true)"
+                :style="(checkTodayAchieved[index] === true) ? 'background-color:#D9D9D9'
                 :'background-color:#FF0000'">
             </form>
             <form class="edit-form" @submit.prevent="edit(habit)">
@@ -81,17 +81,50 @@
       return {
         displaySidenav: false,
         displayToDashboard: false,
-        userData: {},
-        habitsLength: ''
+        userData: [],
+        Habits: [],
+        habitsLength: '',
+        thisWeek: [],
+        changeDayColor: [],
+        checkTodayAchieved: []
       }
     },
     created: async function () {
+      try {
+        await this.$axios.$get('/users/checkThisYear');
+      } catch (error) {
+        console.log(error);
+      }
       try {
         const userData = await this.$axios.$post('/users/getUserData', {
           name: this.$auth.user.name
         });
         this.userData = userData;
+        this.Habits = userData.Habits;
         this.habitsLength = userData.Habits.length;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const thisWeek = await this.$axios.$get('/users/getThisWeek');
+        this.thisWeek = thisWeek;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const changeDayColor = await this.$axios.$post('/users/changeDayColor', {
+          userData: this.userData,
+          thisWeek: this.thisWeek
+        });
+        this.changeDayColor = changeDayColor;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const checkTodayAchieved = await this.$axios.$post('/users/checkTodayAchieved', {
+          userData: this.userData
+        });
+        this.checkTodayAchieved = checkTodayAchieved;
       } catch (error) {
         console.log(error);
       }
@@ -167,7 +200,7 @@
     border-radius: 50%;
     background-color: #D9D9D9;
   }
-  .combos-and-success {
+  .success {
     display: flex;
   }
   #ingenuity, #combos, #success {

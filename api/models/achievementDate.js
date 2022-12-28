@@ -3,21 +3,25 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Calendar extends Model {
+  class AchievementDate extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Calendar.hasMany(models.Achievement, {
-        foreignKey: 'calendarId',
+      AchievementDate.belongsToMany(models.Habit, {
+        through: models.HabitAchievement,
+        foreignKey: 'habitId'
+      });
+      AchievementDate.hasMany(models.HabitAchievement, {
+        foreignKey: 'achievementId',
         onUpdate: 'cascade',
         onDelete: 'cascade'
       });
     }
   }
-  Calendar.init({
+  AchievementDate.init({
     year: DataTypes.INTEGER,
     month: DataTypes.INTEGER,
     day: DataTypes.INTEGER,
@@ -25,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     paranoid: true,
-    modelName: 'Calendar'
+    modelName: 'AchievementDate'
   });
-  return Calendar;
+  return AchievementDate;
 };

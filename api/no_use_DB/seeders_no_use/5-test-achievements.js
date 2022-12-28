@@ -8,6 +8,12 @@ module.exports = {
       'Achievements',
       [
         {
+          calendarId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null
+        },
+        {
           calendarId: 358,
           createdAt: new Date(),
           updatedAt: new Date(),

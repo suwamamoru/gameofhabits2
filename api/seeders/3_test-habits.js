@@ -14,8 +14,7 @@ module.exports = {
           tag2: 'ウォーキング',
           tag3: '',
           ingenuity: '朝起きたらなるべく早く外に出る',
-          successDays: 0,
-          todayAchieved: false,
+          successDays: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null
@@ -27,8 +26,7 @@ module.exports = {
           tag2: '',
           tag3: '',
           ingenuity: 'スクリーンタイムで21時に画面消灯するように設定',
-          successDays: 0,
-          todayAchieved: false,
+          successDays: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null

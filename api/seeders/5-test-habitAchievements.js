@@ -15,8 +15,22 @@ module.exports = {
           deletedAt: null
         },
         {
-          habitId: 2,
+          habitId: 1,
           achievementId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null
+        },
+        {
+          habitId: 2,
+          achievementId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null
+        },
+        {
+          habitId: 2,
+          achievementId: 3,
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null

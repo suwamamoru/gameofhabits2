@@ -7,15 +7,10 @@ const express = require('express'),
 router.post(
   '/gacha',
   gachaController.gacha,
-  // gachaController.updateCombos,
   gachaController.updateSP,
-  gachaController.getDegree,
   gachaController.updateDegree,
-  gachaController.getToday,
-  gachaController.updateAchieveDay,
-  gachaController.getHabitAchieveDays,
-  gachaController.countSuccessDays,
-  gachaController.updateSuccessDays,
+  gachaController.createNewAchievement,
+  gachaController.countSuccessDays
 );
 
 module.exports = router;
