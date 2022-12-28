@@ -40,6 +40,13 @@
         toggled: false
       }
     },
+    beforeRouteEnter (to, from, next) {
+      if (to.params.id) {
+        next();
+      } else {
+        next({ path: '/dashboard' });
+      }
+    },
     created: async function () {
       try {
         const userData = await this.$axios.$post('/users/getUserData', {

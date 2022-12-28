@@ -117,12 +117,10 @@ module.exports = {
             habitAchievement.AchievementDate.month === week.month &&
             habitAchievement.AchievementDate.day === week.day
           ) {
-            console.log(true);
             achieveDay['year'] = week.year
             achieveDay['month'] = week.month
             achieveDay['day'] = week.day
           }
-          console.log(false);
         });
         if (
           achieveDay.year === week.year &&
