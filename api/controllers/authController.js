@@ -2,6 +2,7 @@
 
 const User = require('../models').User,
       Habit = require('../models').Habit,
+      HabitAchievement = require('../models').HabitAchievement,
       jwt = require('jsonwebtoken'),
       bcrypt = require('bcrypt'),
       { validationResult } = require('express-validator');
@@ -131,10 +132,45 @@ module.exports = {
     })
     .then(() => {
       console.log('createHabit');
-      res.status(200).end();
+      next();
     })
     .catch((error) => {
       console.log('Habit Creation Error in createHabit: ' + error);
+      res.status(500).end();
+    });
+  },
+
+  getHabit: (req, res, next) => {
+    Habit.findOne({
+      where: {
+        userId: res.locals.userId
+      }
+    })
+    .then(habit => {
+      res.locals.habitId = habit.id;
+      console.log('getHabit');
+      next();
+    })
+    .catch((error) => {
+      console.log('getHabitId Error: ' + error);
+      res.status(500).end();
+    });
+  },
+
+  createHabitAchievement: (req, res, next) => {
+    HabitAchievement.create({
+      habitId: res.locals.habitId,
+      achievementId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null
+    })
+    .then(() => {
+      console.log('createHabitAchievement');
+      res.status(200).end();
+    })
+    .catch((error) => {
+      console.log('HabitAchievement Creation Error in createHabitAchievement: ' + error);
       res.status(500).end();
     });
   }

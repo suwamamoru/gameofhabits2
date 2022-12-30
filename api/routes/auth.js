@@ -18,7 +18,9 @@ router.post(
   authController.checkSameUser,
   authController.createUser,
   authController.getUserId,
-  authController.createHabit
+  authController.createHabit,
+  authController.getHabit,
+  authController.createHabitAchievement
 );
 
 
