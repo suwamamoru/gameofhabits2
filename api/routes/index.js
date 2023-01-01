@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const express = require('express'),
+      router = express.Router(),
+      users = require('./users'),
+      auth = require('./auth'),
+      gacha = require('./gacha');
+
+router.use('/users', users);
+router.use('/auth', auth);
+router.use('/gacha', gacha);
 
 module.exports = router;

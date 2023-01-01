@@ -36,6 +36,8 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -45,5 +47,46 @@ export default {
   server: {
     port: 8080,
     host: '0.0.0.0'
+  },
+
+  axios: {
+    proxy: true,
+    prefix: '/api',
+    browserBaseURL: 'http://localhost:3000'
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:3000',
+      pathRewrite: {
+        '^/api': ''
+      }
+    }
+  },
+
+  auth: {
+    redirect: {
+      login: '/signin',
+      logout: '/signin',
+      callback: false,
+      home: '/dashboard'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/auth/login',
+            method: 'post',
+            property: 'token'
+          },
+          user: {
+            url: '/auth/verify',
+            method: 'get',
+            property: 'verify'
+          },
+          logout: false
+        }
+      }
+    }
   }
 }
