@@ -163,7 +163,7 @@
     background-color: #48698E;
   }
   .contents {
-    width: 70vw;
+    width: 470px;
     margin: auto;
   }
   .title {

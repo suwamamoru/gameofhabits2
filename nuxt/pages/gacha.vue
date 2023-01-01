@@ -90,7 +90,7 @@
     background-color: #48698E;
   }
   .content {
-    width: 70vw;
+    width: 470px;
     height: 100vh;
     margin: auto;
     margin-top: 50px;

@@ -1,8 +1,10 @@
 <template>
   <div class="index">
-    <header>
-      <NuxtLink to="/signin" class="header-btn">ログイン</NuxtLink>
-    </header>
+    <div class="header-container">
+      <header>
+        <NuxtLink to="/signin" class="header-btn">ログイン</NuxtLink>
+      </header>
+    </div>
     <div class="title">
       <h1 class="millionaire">習慣大富豪</h1>
       <h1 class="game-of-habits">− GAME OF HABITS −</h1>
@@ -30,17 +32,19 @@
     font-family: Hiragino Mincho Pro;
     background-color: #48698E;
   }
-  header {
+  .header-container {
     display: table;
     width: 100vw;
     height: 60px;
     background-color: #474747;
   }
-  .header-btn {
+  header {
     display: table-cell;
     text-align: right;
     vertical-align: middle;
     padding-right: 45px;
+  }
+  .header-btn {
     border: none;
     text-decoration: none;
     font-size: 18px;

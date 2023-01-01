@@ -99,7 +99,7 @@
     background-color: #48698E;
   }
   .content {
-    width: 70vw;
+    width: 460px;
     margin: auto;
     font-size: 18px;
   }

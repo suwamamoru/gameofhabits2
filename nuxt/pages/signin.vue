@@ -1,8 +1,10 @@
 <template>
   <div class="signin">
-    <header>
-      <NuxtLink to="/signup" class="header-btn">新規登録</NuxtLink>
-    </header>
+    <div class="header-container">
+      <header>
+        <NuxtLink to="/signup" class="header-btn">新規登録</NuxtLink>
+      </header>
+    </div>
     <div class="contents">
       <div class="title">
         <h1>習慣大富豪</h1>
@@ -69,17 +71,19 @@
     font-family: Hiragino Mincho Pro;
     background-color: #48698E;
   }
-  header {
+  .header-container {
     display: table;
     width: 100vw;
     height: 60px;
     background-color: #474747;
   }
-  .header-btn {
+  header {
     display: table-cell;
     text-align: right;
     vertical-align: middle;
     padding-right: 45px;
+  }
+  .header-btn {
     border: none;
     text-decoration: none;
     font-size: 18px;
